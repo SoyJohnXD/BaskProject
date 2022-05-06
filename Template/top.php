@@ -1,10 +1,51 @@
- <!-- Navbar -->
- <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
-          </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
-        </nav>
+<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg bg-primary"  color-on-scroll="100">
+  <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit-pro/index.html">
+         B-ASK Project </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                  <i class="material-icons">apps</i> Banco de preguntas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                  <i class="material-icons">apps</i> Banco de examenes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                  <i class="material-icons">apps</i> Crear tuexamen
+              </a>
+            </li>
+            <li class="dropdown nav-item ">
+<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+<i class="material-icons">face</i> Perfil
+<div class="ripple-container"></div></a>
+<div class="dropdown-menu dropdown-with-icons ">
+<a href="./presentation.html" class="dropdown-item">
+<i class="material-icons">logout</i> Cerrar Secion
+</a>
+<a href="./index.html" class="dropdown-item">
+<i class="material-icons">info</i> Informacion Personal
+</a>
+<a href="http://demos.creative-tim.com/material-kit-pro/docs/2.1/getting-started/introduction.html" class="dropdown-item">
+<i class="material-icons">help</i> Ayuda
+</a>
+</div>
+</li>
+          </ul>
+      </div>
+  </div>
+</nav>
