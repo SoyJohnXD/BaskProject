@@ -17,6 +17,7 @@ if(!defined("URL_EXTRA_LIBS")) define("URL_EXTRA_LIBS", URL_PROY."assets/extra-l
 if(!defined("URL_IMAGES")) define("URL_IMAGES", URL_PROY."assets/images/");
 if(!defined("URL_CSS")) define("URL_CSS", URL_PROY."dist/css/");
 if(!defined("URL_JS")) define("URL_JS", URL_PROY."dist/js/");
+if(!defined("URL_CONTROLLER")) define("URL_CONTROLLER", URL_PROY."Controller/");
 
 if(!defined("URL_MAIN")) define("URL_MAIN", URL_PROY."mainLib/lib/");
 
