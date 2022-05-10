@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!defined("FOLD_PROYECT") )define("FOLD_PROY",$_SERVER["CONTEXT_DOCUMENT_ROOT"]."/baskprojet/");
+if(!defined("FOLD_PROYECT") )define("FOLD_PROY",$_SERVER["CONTEXT_DOCUMENT_ROOT"]."/baskproject/");
 
 if(!defined("FOLDER_TEMPLATE")) define("FOLDER_TEMPLATE", FOLD_PROY."Template/");
 
@@ -9,7 +9,7 @@ if(!defined("FOLDER_TEMPLATE")) define("FOLDER_TEMPLATE", FOLD_PROY."Template/")
 /*TRAER LOS ESTILOS PARA EL TEMPLATE*/
 
 /*Encuentra la carpeta proyecto*/
-if(!defined("URL_PROY")) define("URL_PROY", "/baskprojet/");
+if(!defined("URL_PROY")) define("URL_PROY", "/baskproject/");
 
 /*Seguido, encuentra la carpeta 'assets' con los estilos*/
 if(!defined("URL_LIBS")) define("URL_LIBS", URL_PROY."assets/");
