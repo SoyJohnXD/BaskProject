@@ -57,7 +57,7 @@ CREATE TABLE `facultad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +66,7 @@ CREATE TABLE `facultad` (
 
 LOCK TABLES `facultad` WRITE;
 /*!40000 ALTER TABLE `facultad` DISABLE KEYS */;
+INSERT INTO `facultad` VALUES (1,'Facultad de Negocios, Gestión y Sostenibilidad'),(2,'Facultad de Sociedad, Cultura y  Creatividad'),(3,'Facultad de Ingeniería, Diseño e Innovación');
 /*!40000 ALTER TABLE `facultad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +84,7 @@ CREATE TABLE `materia` (
   PRIMARY KEY (`id`),
   KEY `fk_materia_facultad` (`fk_facultad`),
   CONSTRAINT `fk_materia_facultad` FOREIGN KEY (`fk_facultad`) REFERENCES `facultad` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,6 +93,7 @@ CREATE TABLE `materia` (
 
 LOCK TABLES `materia` WRITE;
 /*!40000 ALTER TABLE `materia` DISABLE KEYS */;
+INSERT INTO `materia` VALUES (1,'Materia 1',1),(2,'Materia 2',1),(3,'Materia 3',1),(4,'Materia 1',3),(5,'Materia 2',3),(6,'Materia 3',3),(7,'Materia 1',2),(8,'Materia 2',2),(9,'Materia 3',2);
 /*!40000 ALTER TABLE `materia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,4 +321,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-09 23:04:29
+-- Dump completed on 2022-05-13  1:59:00

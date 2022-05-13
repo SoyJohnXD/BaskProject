@@ -13,9 +13,11 @@
   <div class="main main-raised" style="margin-top:-615px ;">
     <div class="container">
       <div class="section text-center" id="sectionComodin">
-        <h3 class="text-dark mb-5">Seleccione el tipo de examen que desea realizar</h3>
-        <div class="row">
 
+        <div class="row" id="examOptions">
+          <div class="col-md-12">
+            <h3 class="text-dark mb-5">Seleccione el tipo de examen que desea realizar</h3>
+          </div>
           <div class="rotating-card-container col-md-4">
             <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
               <div class="front front-background  bg-primary">
@@ -29,7 +31,7 @@
                 <div class="card-body pt-7 text-center">
                   <h3 class="text-white">Recuerde que</h3>
                   <p class="text-white opacity-8"> Los quices tienen un maximo de 10 preguntas</p>
-                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','quiz',)">Crear Examen</button>
+                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','Q',)">Crear Examen</button>
                 </div>
               </div>
             </div>
@@ -47,7 +49,8 @@
                 <div class="card-body pt-7 text-center">
                   <h3 class="text-white">Requerda que</h3>
                   <p class="text-white opacity-8"> Los parciales tienen un maximo de 15 preguntas </p>
-                  <a href=".//sections/page-sections/hero-sections.html" target="_blank" class="btn btn-primary btn-sm w-50 mx-auto mt-3">Crear Examen</a>
+                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','P',)">Crear Examen</button>
+
                 </div>
               </div>
             </div>
@@ -65,26 +68,29 @@
                 <div class="card-body pt-7 text-center">
                   <h3 class="text-white">Recuerda que </h3>
                   <p class="text-white opacity-8">Los examenes finales tienen un maximo de 25 preguntas</p>
-                  <a href=".//sections/page-sections/hero-sections.html" target="_blank" class="btn btn-primary btn-sm w-50 mx-auto mt-3">Crear Examen</a>
+                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','F',)">Crear Examen</button>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <form action="" method="post">
+        <form action="" method="post" id="formExam" style="display: none;">
           <div class="row">
+            <button type="button" onclick="dynamicForm('backToSelect')" class="btn btn-secondary"> <i class="fa-solid fa-caret-left"></i> Volver</button>
+            <input type="hidden" name="typeExam" id="typeExam">
             <div class="col-12 text-center">
-              <h2>Examen de tipo <b> Quiz </b></h2>
+              <h2 id="titleForm"></h2>
             </div>
-            <div class="col-12 text-left row">
+            <div class="col-12 text-left ">
               <h4>Informacion de el examen</h4>
               <hr>
-              <div class="col-12 row">
+              <div class="col-12 row mt-3">
 
                 <div class="col-md-4 ">
                   <div class="form-group">
-                    <label for="exampleFormControlSelect1">Facultad / Carrera</label>
-                    <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">
+                    <label for="exampleFormControlSelect1">Facultad / Carrera <span class="text-danger">(*)</span></label>
+                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectFacultad" id="selectFacultad">
                       <option value="">Seleccione...</option>
                       <?php
                       require_once "../Model/facultad_model.php";
@@ -98,41 +104,59 @@
                 </div>
                 <div class="col-md-4 ">
                   <div class="form-group">
-                    <label for="exampleFormControlSelect1">Materia / Asignatura</label>
-                    <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">
+                    <label for="exampleFormControlSelect1">Materia / Asignatura <span class="text-danger">(*)</span></label>
+                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectMateria" id="selectMateria">
                       <option value="">Seleccione...</option>
-                      
+
                       <?php
                       require_once "../Model/Materia_model.php";
                       $materia = new Materia_model();
                       $listamateria = $materia->listar();
-                      $selectgroup ="";
-                      foreach ($listamateria as $itemMateria) { 
-                        if (!$selectgroup == $itemMateria['facultad_id']) {?>
-                      </optgroup> 
-                          <?php
-                          $selectgroup = $itemMateria['facultad_id']; ?>
-                        <optgroup label="<?= $itemMateria['facultad_nombre'] ?>">
-                       
-                        <?php } ?>
-                        <option value="<?= $itemMateria['id'] ?>"><?= $itemMateria['nombre']." / ".$itemMateria['facultad_id'] ?></option>
-                        
-                      <?php  }  ?>
+                      $selectgroup = "";
+                      foreach ($listaFacultad as $itemFacultad) { ?>
+                        <optgroup label="<?= $itemFacultad['nombre'] ?>">
+                          <?php foreach ($listamateria as $itemMateria) {
+                            if ($itemMateria['facultad_id'] == $itemFacultad['id']) { ?>
+
+                              <option value="<?= $itemMateria['id'] ?>"><?= $itemMateria['nombre'] ?></option>
+
+                          <?php }
+                          }  ?>
+                        </optgroup>
+                      <?php }  ?>
+
+
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 ">
-                  <div class="form-group bmd-form-group">
-                    <label class="bmd-label-floating">Corte</label>
-                    <input type="text" class="form-control">
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Corte <span class="text-danger">(*)</span></label>
+                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectCorte" id="selectCorte">
+                      <option value="">Seleccione...</option>
+                      <option value="1">Primer corte</option>
+                      <option value="2">Segundo corte</option>
+                      <option value="3">Tercer corte</option>
+                    </select>
                   </div>
                 </div>
+
+
               </div>
             </div>
+            <div class="col-12 text-left ">
+              <h4>Cree o agregue las preguntas </h4>
+              <p>Recuerde que el examen tiene un maximo de <b id="maxQuestions"></b> preguntas</p>
+              <hr>
+              <button class="btn btn-primary mr-3"><i class="material-icons">add</i>Crear una pregunta</button><button class="btn btn-info"><i class="material-icons">search</i>Buscar / Agregar pregunta</button>
+
+            </div>
           </div>
-        </form>
+
       </div>
+      </form>
     </div>
+  </div>
   </div>
 
 
