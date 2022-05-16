@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!defined("FOLD_PROYECT") )define("FOLD_PROY",$_SERVER["CONTEXT_DOCUMENT_ROOT"]."/baskproject/");
+if(!defined("FOLD_PROYECT") )define("FOLD_PROY",$_SERVER["CONTEXT_DOCUMENT_ROOT"]."/BaskProject/");
 
 if(!defined("FOLDER_TEMPLATE")) define("FOLDER_TEMPLATE", FOLD_PROY."Template/");
 
@@ -9,7 +9,7 @@ if(!defined("FOLDER_TEMPLATE")) define("FOLDER_TEMPLATE", FOLD_PROY."Template/")
 /*TRAER LOS ESTILOS PARA EL TEMPLATE*/
 
 /*Encuentra la carpeta proyecto*/
-if(!defined("URL_PROY")) define("URL_PROY", "/baskproject/");
+if(!defined("URL_PROY")) define("URL_PROY", "/BaskProject/");
 
 /*Seguido, encuentra la carpeta 'assets' con los estilos*/
 if(!defined("URL_LIBS")) define("URL_LIBS", URL_PROY."assets/");
@@ -21,6 +21,6 @@ if(!defined("URL_CONTROLLER")) define("URL_CONTROLLER", URL_PROY."Controller/");
 
 if(!defined("URL_MAIN")) define("URL_MAIN", URL_PROY."mainLib/lib/");
 
-include "view/SessionController/sesion.php";
+include "View/SessionController/sesion.php";
 
 ?>
