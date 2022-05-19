@@ -21,68 +21,77 @@
   <div class="main main-raised" style="margin-top:100px ;">
     <div class="container">
       <div class="section text-center" id="sectionComodin">
-
         <div class="row" id="examOptions">
           <div class="col-md-12">
             <h3 class="text-dark mb-5">Seleccione el tipo de examen que desea realizar</h3>
           </div>
-          <div class="rotating-card-container col-md-4">
-            <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-              <div class="front front-background  bg-primary">
-                <div class="card-body py-7 text-center">
-                  <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                  <h3 class="text-white">Crear un Quiz</h3>
-                  <p class="text-white opacity-8">Crea un quiz para probar el conocimiento adquirido de tus estudiantes </p>
+          <div class="col-md-4 ml-auto mr-auto">
+            <div class="rotating-card-container">
+              <div class="card card-rotate card-background">
+                <div class="front front-background bg-primary">
+                  <div class="card-body">
+                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
+                    <h3 class="text-white">Crear un Quiz</h3>
+                    <p class="text-white opacity-8">Crea un quiz para probar el conocimiento adquirido de tus estudiantes </p>
+                  </div>
                 </div>
-              </div>
-              <div class="back back-background bg-secondary">
-                <div class="card-body pt-7 text-center">
-                  <h3 class="text-white">Recuerde que</h3>
-                  <p class="text-white opacity-8"> Los quices tienen un maximo de 10 preguntas</p>
-                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','Q',)">Crear Examen</button>
+
+                <div class="back back-background bg-secondary">
+                  <div class="card-body">
+                    <h3 class="text-white">Recuerde que</h3>
+                    <p class="text-white opacity-8"> Los quices tienen un maximo de 10 preguntas</p>
+                    <button class="btn btn-primary" onclick="dynamicForm('selectExam','Q',)">Crear Examen</button>
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="rotating-card-container col-md-4">
-            <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-              <div class="front front-background  bg-primary">
-                <div class="card-body py-7 text-center">
-                  <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                  <h3 class="text-white">Crear un Parcial</h3>
-                  <p class="text-white opacity-8">Crea examen parcial y evalua todo lo aprendido del ultimo corte</p>
+          <div class="col-md-4 ml-auto mr-auto">
+            <div class="rotating-card-container">
+              <div class="card card-rotate card-background">
+                <div class="front front-background bg-primary">
+                  <div class="card-body">
+                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
+                    <h3 class="text-white">Crear un Parcial</h3>
+                    <p class="text-white opacity-8">Crea examen parcial y evalua todo lo aprendido del ultimo corte</p>
+                  </div>
                 </div>
-              </div>
-              <div class="back back-background bg-secondary">
-                <div class="card-body pt-7 text-center">
-                  <h3 class="text-white">Requerda que</h3>
-                  <p class="text-white opacity-8"> Los parciales tienen un maximo de 15 preguntas </p>
-                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','P',)">Crear Examen</button>
 
+                <div class="back back-background bg-secondary">
+                  <div class="card-body">
+                    <h3 class="text-white">Requerda que</h3>
+                    <p class="text-white opacity-8"> Los parciales tienen un maximo de 15 preguntas </p>
+                    <button class="btn btn-primary" onclick="dynamicForm('selectExam','P',)">Crear Examen</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="rotating-card-container col-md-4">
-            <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-              <div class="front front-background  bg-primary">
-                <div class="card-body py-7 text-center">
-                  <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                  <h3 class="text-white">Crear un Examen Final</h3>
-                  <p class="text-white opacity-8">Crea un examen final y evalua todo lo aprendido en el semestre</p>
+          <div class="col-md-4 ml-auto mr-auto">
+            <div class="rotating-card-container">
+              <div class="card card-rotate card-background">
+                <div class="front front-background bg-primary">
+                  <div class="card-body">
+                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
+                    <h3 class="text-white">Crear un Examen Final</h3>
+                    <p class="text-white opacity-8">Crea un examen final y evalua todo lo aprendido en el semestre</p>
+                  </div>
                 </div>
-              </div>
-              <div class="back back-background bg-secondary">
-                <div class="card-body pt-7 text-center">
-                  <h3 class="text-white">Recuerda que </h3>
-                  <p class="text-white opacity-8">Los examenes finales tienen un maximo de 25 preguntas</p>
-                  <button class="btn btn-primary" onclick="dynamicForm('selectExam','F',)">Crear Examen</button>
 
+                <div class="back back-background bg-secondary">
+                  <div class="card-body">
+                    <h3 class="text-white">Recuerda que </h3>
+                    <p class="text-white opacity-8">Los examenes finales tienen un maximo de 25 preguntas</p>
+                    <button class="btn btn-primary" onclick="dynamicForm('selectExam','F',)">Crear Examen</button>
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <form action="" method="post" id="formExam" style="display: none;">
           <div class="row">
             <button type="button" onclick="dynamicForm('backToSelect')" class="btn btn-secondary"> <i class="fa-solid fa-caret-left"></i> Volver</button>
@@ -158,12 +167,20 @@
               <hr>
               <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#createQuestion"><i class="material-icons">add</i>Crear una pregunta</button>
               <button class="btn btn-info"><i class="material-icons">search</i>Buscar / Agregar pregunta</button>
+              <div class="col-12">
+                <input type="hidden" id="ids_question">
+                <div id="questionContainer" role="tablist" aria-multiselectable="true" class="card-collapse">
 
+            
+
+
+                </div>
+              </div>
             </div>
           </div>
 
+        </form>
       </div>
-      </form>
     </div>
   </div>
 
@@ -178,7 +195,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="formQuestion">
           <p>Acontinuacion seleccione el tipo de pregunta que desea crear: <a style="cursor: pointer;" onclick="$('#exampleQuestion').modal('show')"><span class="material-icons text-primary">help</span></a> </p>
 
           <div class="col-md-12">
@@ -209,30 +226,30 @@
                 <div class="col-md-12">
                   <div class="form-group bmd-form-group">
                     <div class="row">
-                    <label class="m-0 d-flex align-items-center mr-3">Indicativo: <span class="text-danger">(*)</span> </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Que debe hacer el estudiante."><span class="material-icons text-info">info</span></a>
+                      <label class="m-0 d-flex align-items-center mr-3">Indicativo: </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Que debe hacer el estudiante. (No obligatorio)"><span class="material-icons text-info">info</span></a>
                     </div>
-                    <textarea rows="2" type="text" class="form-control"></textarea>
+                    <textarea rows="2" type="text" name="inputIndicativo" id="inputIndicativo" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group bmd-form-group">
                     <div class="row">
-                    <label class="m-0 d-flex align-items-center mr-3">Contexto: <span class="text-danger">(*)</span></label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Todo lo que debe saber el estudiante para responder."><span class="material-icons text-info">info</span></a>
+                      <label class="m-0 d-flex align-items-center mr-3">Contexto: </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Todo lo que debe saber el estudiante para responder. (No obligatorio"><span class="material-icons text-info">info</span></a>
                     </div>
-                    <textarea rows="3" type="text" class="form-control"></textarea>
+                    <textarea rows="3" type="text" name="inputContexto" id="inputContexto" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group bmd-form-group">
                     <div class="row">
-                    <label class="m-0 d-flex align-items-center mr-3">Enunciado <span class="text-danger">(*)</span></label> <a data-container="body" data-toggle="tooltip" data-placement="right" title="Pregunta como tal."><span class="material-icons text-info">info</span></a>
+                      <label class="m-0 d-flex align-items-center mr-3">Enunciado <span class="text-danger">(*)</span></label> <a data-container="body" data-toggle="tooltip" data-placement="right" title="Pregunta como tal. (Obligatorio)"><span class="material-icons text-info">info</span></a>
                     </div>
-                    <textarea rows="2" type="text" class="form-control"></textarea>
+                    <textarea rows="3" type="text" name="inputEnunciado" id="inputEnunciado" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12 text-center mt-3">
                   <div class="col-12 row">
-                  <p>Seleccione una imagen si es necesario: </p><a data-container="body" data-toggle="tooltip" data-placement="right" title="Agregue imagen de contexto o guia si es necesario"><span class="material-icons text-info">info</span></a>
+                    <p>Seleccione una imagen si es necesario: </p><a data-container="body" data-toggle="tooltip" data-placement="right" title="Agregue imagen de contexto o guia si es necesario"><span class="material-icons text-info">info</span></a>
                   </div>
                   <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     <div class="fileinput-new thumbnail img-raised">
@@ -243,7 +260,7 @@
                       <span class="btn btn-raised btn-round btn-default btn-file">
                         <span class="fileinput-new">Select image</span>
                         <span class="fileinput-exists">Change</span>
-                        <input type="file" name="..." />
+                        <input type="file" name="fileImg" id="fileImg" />
                       </span>
                       <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                     </div>
@@ -252,7 +269,7 @@
               </div>
             </div>
             <div id="createAnswers" style="display: none ;" class="col-12 mt-3">
-            <hr>
+              <hr>
               <div class="text-center col-12">
                 <h4 class="">Creacion de opciones de respuesta</h4>
               </div>
@@ -302,7 +319,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar respuesta</button>
+          <button type="button" onclick="dynamicForm('createQuestion')" class="btn btn-primary">Guardar respuesta</button>
         </div>
       </div>
     </div>
@@ -327,14 +344,14 @@
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Tipo de pregunta: <span class="text-danger">(*)</span></label>
                   <input type="text" class="form-control" readonly="readonly" value="Cerrada">
-                  
+
                 </div>
               </div>
               <div class="col-md-6" id="tipoRespuesta">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Tipo de respuestas: <span class="text-danger">(*)</span></label>
                   <input type="text" class="form-control" readonly="readonly" value="Multiple Repuesta">
-                  
+
                 </div>
               </div>
             </div>
@@ -354,20 +371,20 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group bmd-form-group">
-                  <p>Enunciado: <b class="text-danger">(*)</b></p>
+                    <p>Enunciado: <b class="text-danger">(*)</b></p>
                     <p> Dado el siguiente circuito: </p>
                   </div>
                 </div>
                 <div class="col-md-12 text-center">
                   <div class="col-12">Imagen de contexto: </div>
                   <br>
-                  
+
                   <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                     <div class="fileinput-new thumbnail img-raised">
                       <img src="<?= URL_LIBS ?>/img/img-example.png" alt="...">
                     </div>
                     <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -404,7 +421,34 @@
                               <i class="material-icons">question_answer</i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" value=" ( A + C )(A + B + C)" placeholder="Contenido Respuesta">
+                          <input type="text" class="form-control" value=" Respuesta de ejemplo 1" placeholder="Contenido Respuesta">
+                        </div>
+                      </td>
+                      <td class="td-actions text-center">
+                        <button type="button" rel="tooltip" class="btn btn-danger">
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check multiple text-center">
+                          <label class="form-check-label">
+                            <input class="form-check-input" checked type="checkbox" value="">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">question_answer</i>
+                            </span>
+                          </div>
+                          <input type="text" class="form-control" value=" Respuesta de ejemplo 2" placeholder="Contenido Respuesta">
                         </div>
                       </td>
                       <td class="td-actions text-center">
@@ -431,34 +475,7 @@
                               <i class="material-icons">question_answer</i>
                             </span>
                           </div>
-                          <input type="text" checked class="form-control" value="(A + B + C) ( A + C)" placeholder="Contenido Respuesta">
-                        </div>
-                      </td>
-                      <td class="td-actions text-center">
-                        <button type="button" rel="tooltip" class="btn btn-danger">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check multiple text-center">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td class="text-right">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">question_answer</i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control" value="(ABC) (AC)" placeholder="Contenido Respuesta">
+                          <input type="text" class="form-control" value="Respuesta de ejemplo 1" placeholder="Contenido Respuesta">
                         </div>
                       </td>
                       <td class="td-actions text-center">
@@ -470,7 +487,6 @@
                   </tbody>
                 </table>
               </div>
-
             </div>
 
 
@@ -491,16 +507,17 @@
   <script src="../logic/create_examen_logic.js"></script>
   <script>
     var ids_answer = []
-//FUNCION PARA ARREGLAR BUG DE DOBLE MODAL
+    var ids_question = []
+    //FUNCION PARA ARREGLAR BUG DE DOBLE MODAL
     $(document).on('hidden.bs.modal', function(event) {
       if ($('.modal:visible').length) {
         $('body').addClass('modal-open');
       }
     });
-//--------------------------------------------
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+    //--------------------------------------------
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   </script>
   <?php include FOLDER_TEMPLATE . "Alertas.php"; ?>
 
