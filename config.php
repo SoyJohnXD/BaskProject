@@ -4,6 +4,7 @@ session_start();
 if(!defined("FOLD_PROYECT") )define("FOLD_PROY",$_SERVER["CONTEXT_DOCUMENT_ROOT"]."/BaskProject/");
 
 if(!defined("FOLDER_TEMPLATE")) define("FOLDER_TEMPLATE", FOLD_PROY."Template/");
+if(!defined("FOLDER_MODALS")) define("FOLDER_MODALS", FOLD_PROY."View/Modal/");
 
 
 /*TRAER LOS ESTILOS PARA EL TEMPLATE*/

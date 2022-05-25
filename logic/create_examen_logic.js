@@ -1,7 +1,7 @@
 var typeAnswer = ""; // Constante para almacenar el tipo de respuesta
 var arrayAnswer = []; //Array temporal donde se van a almacenar por id las repuestas agregadas
 var maxQuestions = "";
-var Questions= [];
+var Questions = [];
 
 function llenar_hidden(list, id_hidden) {
   hidden = "";
@@ -55,44 +55,44 @@ function dynamicForm(option, dataSet) {
       break;
     /* ---------------------------------------------------------------------------------- */
     case "typeQuestion":
-      if ($("#selectTypeQuestion").val() == "abierta") {
+      if ($("#typeQuestionHid").val() == "abierta") {
         $("#comodinAlert").hide("fast"); //ocultamos la alerta
-        $("#selectTypeAnswer").prop("disabled", true); //Se pone en disable
-        $("#tipoRespuesta").find(".btn").addClass("disabled");
+        $(".typeAnswerRadio").prop("disabled", true); //Se pone en disable
+        $(".typeAnswerRadio").find(".check").removeClass("check");
         $("#contextQuestion").show("fast"); //Se activa el formulario que no es variable
         $("#createAnswers").hide("fast"); //Se activa el formulario que no es variable
-
+        dynamicForm("deleteAllAnswers");
         typeAnswer = "abierta"; //le asignamos un valor a la variable constante para utilizarla despues
-      } else if ($("#selectTypeQuestion").val() == "cerrada") {
+      } else if ($("#typeQuestionHid").val() == "cerrada") {
         $("#comodinAlert").hide("slow"); //ocultamos la alerta
-        $("#selectTypeAnswer").prop("disabled", false); //activamos el campo tipo respuesta
-        $("#tipoRespuesta").find(".btn").removeClass("disabled");
+        $(".typeAnswerRadio").prop("disabled", false); //activamos el campo tipo respuesta
+        $(".typeAnswerRadio").find(".check").removeClass("check");
         $("#comodinAlert").show("fast"); //mostramos la alerta
         $("#contextQuestion").hide("fast"); //Se inactiva el formulario que no es variable
-      } else if ($("#selectTypeQuestion").val() == "") {
+      } else if ($("#typeQuestionHid").val() == "") {
         $("#comodinAlert").show("slow"); //mostramos la alerta
-        $("#selectTypeAnswer").prop("disabled", true); //activamos el campo tipo respuesta
-        $("#tipoRespuesta").find(".btn").addClass("disabled");
+        $(".typeAnswerRadio").prop("disabled", true); //activamos el campo tipo respuesta
+        $(".typeAnswerRadio").find("span").removeClass("check");
         $("#contextQuestion").hide("fast"); //Se inactiva el formulario que no es variable
         typeAnswer = ""; //le asignamos un valor a la variable constante para utilizarla despues
       }
       break;
     case "typeAnswer":
-      if ($("#selectTypeAnswer").val() == "unica") {
+      if ($("#typeAnswerHid").val() == "unica") {
         typeAnswer = "unica"; //le asignamos un valor a la variable constante para utilizarla despues
         $("#typeAnswer").val(typeAnswer);
         $("#comodinAlert").hide("fast"); //ocultamos la alerta
         $("#contextQuestion").show("fast"); //Se activa el formulario que no es variable
         $("#createAnswers").show("fast"); //Se activa el formulario que no es variable
         dynamicForm("createAnswers"); //creamos una fila para crear una respuesta
-      } else if ($("#selectTypeAnswer").val() == "multiple") {
+      } else if ($("#typeAnswerHid").val() == "multiple") {
         typeAnswer = "multiple"; //le asignamos un valor a la variable constante para utilizarla despues
         $("#typeAnswer").val(typeAnswer);
         $("#comodinAlert").hide("slow"); //ocultamos la alerta
         $("#contextQuestion").show("fast"); //Se activa el formulario que no es variable
         $("#createAnswers").show("fast"); //Se activa el formulario que no es variable
         dynamicForm("createAnswers");
-      } else if ($("#selectTypeAnswer").val() == "") {
+      } else if ($("#typeAnswerHid").val() == "") {
         typeAnswer = ""; //le asignamos un valor a la variable constante para utilizarla despues
         $("#typeAnswer").val("");
         $("#comodinAlert").show("fast"); //ocultamos la alerta
@@ -123,14 +123,17 @@ function dynamicForm(option, dataSet) {
                         </span>
                       </label>
                     </div>
-                    <div class="form-check unique text-center form-check-radio">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="ansInputRadio" id="ansInputRadio_${long}" >
-                        <span class="circle">
-                          <span class="check"></span>
-                        </span>
-                      </label>
-                    </div>
+
+                    <div class="form-check form-check-radio form-check-inline ">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="ansInputRadio" id="ansInputRadio_${long}">
+                      <span class="circle">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+
+
                   </td>
                   <td class="text-right">
                     <div class="input-group">
@@ -193,84 +196,97 @@ function dynamicForm(option, dataSet) {
       break;
     case "createQuestion":
       if (dynamicForm("validarModalQuestion")) {
-        
-        
-        
-      if (ids_question.length < maxQuestions) {
-        ids_question = ids_question.sort((a, b) => a - b);
-        long = ids_question.length;
-        if (ids_question.length != 0) {
-          long = ids_question[ids_question.length - 1] + 1;
-        }
-        ids_question.push(long);
-        llenar_hidden(ids_question, "ids_question");
-        answerArray = []
-        debugger
-        if (typeAnswer == "unica" || typeAnswer == "multiple" ) {
-          $("#ids_answer").val().split(',').forEach(element => {
-            isCorrect = (typeAnswer=="unica")? $("#ansInputRadio_"+element).prop('checked'):$("#ansInputCheck_"+element).prop('checked');
-            let answer= {
-              "correct": isCorrect,
-              "contenido":$("#ansInputText_"+element).val()
-            }
-            answerArray.push(answer)
-          });
-        }
-        console.log(answerArray);
-        temporalQuestion ={
-          "temporalId":long,
-          "typeQuestion":$("#selectTypeQuestion").val(),
-          "typeAnswer":$("#selectTypeAnswer").val(),
-          "indicativo":$("#inputIndicativo").val(),
-          "contexto":$("#inputContexto").val(),
-          "enunciado":$("#inputEnunciado").val(),
-          "imageContex":($("#fileImg")[0].files.length > 0)?$("#fileImg")[0].files:"",
-          "answers":(answerArray.length > 0)?answerArray: "" ,
+        if (ids_question.length < maxQuestions) {
+          ids_question = ids_question.sort((a, b) => a - b);
+          long = ids_question.length;
+          if (ids_question.length != 0) {
+            long = ids_question[ids_question.length - 1] + 1;
+          }
+          ids_question.push(long);
+          llenar_hidden(ids_question, "ids_question");
+          answerArray = [];
 
-        }
-        console.log(temporalQuestion);
-        var element = document.createElement("div");
-        element.classList.add("card");
-        element.classList.add("card-plain");
-        answerHtml = "";
-        if (!(typeAnswer == "abierta")) {
-          temporalQuestion.answers.forEach(key => {
-            if (typeAnswer=="unica") {
-              answerHtml += `
-              <div class="form-check d-flex align-items-center unique form-check-radio">
+          if (typeAnswer == "unica" || typeAnswer == "multiple") {
+            $("#ids_answer")
+              .val()
+              .split(",")
+              .forEach((element) => {
+                isCorrect =
+                  typeAnswer == "unica"
+                    ? $("#ansInputRadio_" + element).prop("checked")
+                    : $("#ansInputCheck_" + element).prop("checked");
+                let answer = {
+                  correct: isCorrect,
+                  contenido: $("#ansInputText_" + element).val(),
+                };
+                answerArray.push(answer);
+              });
+          }
+          console.log(answerArray);
+          temporalQuestion = {
+            temporalId: long,
+            typeQuestion: $("#typeQuestionHid").val(),
+            typeAnswer: $("#typeAnswerHid").val(),
+            indicativo: $("#inputIndicativo").val(),
+            contexto: $("#inputContexto").val(),
+            enunciado: $("#inputEnunciado").val(),
+            imageContex:
+              $("#fileImg")[0].files.length > 0
+                ? $("#fileImg")[0].files[0]
+                : "",
+            answers: answerArray.length > 0 ? answerArray : "",
+          };
+          console.log(temporalQuestion);
+          var element = document.createElement("div");
+          element.classList.add("card");
+          element.classList.add("card-plain");
+          answerHtml = "";
+          if (!(typeAnswer == "abierta")) {
+            temporalQuestion.answers.forEach((key) => {
+              if (typeAnswer == "unica") {
+                answerHtml += `
+              <div class="form-check d-flex align-items-center form-check-radio">
               <label class="form-check-label pl-5 text-dark">
-                <input class="form-check-input" type="radio" name="ansInputRadio" id="ansInputRadio_${long}" >
+                <input class="form-check-input" type="radio" name="ansInputRadioQuestion_${long}" id="ansInputRadioQuestion_${long}" >
                     ${key.contenido}
                 <span class="circle">
                   <span class="check"></span>
                 </span>
                 </label>
-                ${(key.correct)?`<span class="material-icons ml-3 text-success">check_circle</span>`:""}
-              </div>`
-            }else if (typeAnswer=="multiple") {
-              answerHtml +=`
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+              } else if (typeAnswer == "multiple") {
+                answerHtml += `
               <div class="form-check d-flex align-items-center">
                 <label class="form-check-label pl-5 text-dark">
-                  <input class="form-check-input" type="checkbox" value="">
+                  <input class="form-check-input"  type="checkbox" value="">
                   ${key.contenido}
                   <span class="form-check-sign">
                     <span class="check"></span>
                   </span>
                 </label>
-                ${(key.correct)?`<span class="material-icons ml-3 text-success">check_circle</span>`:""}
-              </div>`
-            }
-          });
-        }else{
-          answerHtml = `<div class="form-group">
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+              }
+            });
+          } else {
+            answerHtml = `<div class="form-group">
           <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Escribe tu respuesta aqui..." rows="3" style="border: solid 1px #212529;border-radius: 6px;padding: 15px;"></textarea>
-        </div>`
-        }
-        
-        element.id = "question_" + long;
-        texto = `   <div class="card-header" role="tab" id="headingOne">
+        </div>`;
+          }
+
+          element.id = "question_" + long;
+          texto = `   <div class="card-header" role="tab" id="headingOne">
                       <a data-toggle="collapse" data-parent="#questionContainer" href="#collapseOne_${long}" aria-expanded="true" aria-controls="collapseOne_${long}">
-                        Pregunta numero ${long+1}:
+                        Pregunta:
 
                         <i class="material-icons">keyboard_arrow_down</i>
                       </a>
@@ -282,7 +298,13 @@ function dynamicForm(option, dataSet) {
                         <p>${temporalQuestion.indicativo}</p>
                         <p>${temporalQuestion.contexto}</p>
                         <p>${temporalQuestion.enunciado} </p>
-                        <img src="${(!temporalQuestion.imageContex=="")?temporalQuestion.imageContex[0]['result']:''}" class="img-responsive ${(temporalQuestion.imageContex=="")?"d-none":""}"style="max-width: 55%;" alt="...">
+                        <img src="${
+                          !temporalQuestion.imageContex == ""
+                            ? temporalQuestion.imageContex.result
+                            : ""
+                        }" class="img-responsive ${
+            temporalQuestion.imageContex == "" ? "d-none" : ""
+          }"style="max-width: 55%;" alt="...">
                         <div class="col-md-12 d-flex mt-2 flex-column">
                         
                           ${answerHtml}
@@ -292,29 +314,60 @@ function dynamicForm(option, dataSet) {
                         <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
                             <i class="material-icons">subject</i>
                         </a>
-                        <a href="#pablo" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
+                        <button type="button" onclick="dynamicForm('fillModalQuestion',${long})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
                             <i class="material-icons">mode_edit</i>
-                        </a>
-                        <a href="#pablo" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
+                        </button>
+                        <button type="button" onclick="dynamicForm('alertDeleteQuestion',${long})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
                             <i class="material-icons">delete</i>
-                        </a>
+                        </button>
                         </div>
                         
                       </div>
                     </div>`;
-      } else {
-        Swal.fire({
-          title: "Oops..?",
-          text: `Solo se permite un maximo de ${maxQuestions} respuestas`,
-          icon: "warning",
-        });
-      }
-      element.innerHTML = texto;
-      questionContainer.appendChild(element);
-      $("#createQuestion").modal("hide");
+        } else {
+          Swal.fire({
+            title: "Oops..?",
+            text: `Solo se permite un maximo de ${maxQuestions} respuestas`,
+            icon: "warning",
+          });
+        }
+        element.innerHTML = texto;
+        questionContainer.appendChild(element);
+        Questions.push(temporalQuestion);
 
+        dynamicForm("cleanModalQuestions");
+        $("#createQuestion").modal("hide");
       }
-      
+
+      break;
+    case "alertDeleteQuestion":
+      Swal.fire({
+        title: "¿Estas seguro de borrar la pregunta?",
+        text: "No puedes recuperar esta iformacion!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dynamicForm("deleteQuestion", dataSet);
+        }
+      });
+      break;
+    case "deleteQuestion":
+      questContainer = document.getElementById("question_" + dataSet);
+
+      $("#question_" + dataSet).hide("fast");
+      questContainer.parentNode.removeChild(questContainer);
+      removeItemFromArr(dataSet, ids_question);
+      llenar_hidden(ids_question, "ids_question");
+      Questions.splice(dataSet, 1);
+      if (ids_question.length == 0) {
+        $("#emptyQuestions").show("slow");
+      }
+      Swal.fire("Eliminada!", "La pregunta ha sido eliminada.", "success");
+
       break;
     case "validarModalQuestion": //Validamos que los input no vengas vacios
       //Función para comprobar los campos de texto
@@ -333,24 +386,21 @@ function dynamicForm(option, dataSet) {
       });
       formQuestion.find("textarea[name=inputEnunciado]").each(function () {
         var $this = $(this);
-          if ($this.val().length <= 0) {
-            camposRellenados = false;
-            $this.parents(".form-group").addClass("has-danger");
-            $this.focus().finish();
-          }
-        
+        if ($this.val().length <= 0) {
+          camposRellenados = false;
+          $this.parents(".form-group").addClass("has-danger");
+          $this.focus().finish();
+        }
       });
       tbodyAnswers.find("input").each(function () {
-      
         var $this = $(this);
-          if ($this.attr("type") == "text") {
-            if ($this.val().length <= 0) {
-              camposRellenados = "respuestas";
-              $this.parents(".input-group").addClass("has-danger");
-              $this.focus().finish();
-            }
-      }
-        
+        if ($this.attr("type") == "text") {
+          if ($this.val().length <= 0) {
+            camposRellenados = "respuestas";
+            $this.parents(".input-group").addClass("has-danger");
+            $this.focus().finish();
+          }
+        }
       });
       if (camposRellenados == false) {
         Swal.fire({
@@ -359,19 +409,99 @@ function dynamicForm(option, dataSet) {
           icon: "error",
         });
         return false;
-      } else if(camposRellenados == "respuestas") {
+      } else if (camposRellenados == "respuestas") {
         Swal.fire({
           title: "Algo salio mal",
           text: `Por favor verifique que las respuestas esten diligenciadas correctamente`,
           icon: "error",
         });
         return false;
-      }else {
+      } else {
         return true;
       }
 
       break;
+    case "vaciarInputs":
+      container = $("#" + dataSet);
+      $(":input", container).each(function () {
+        var type = this.type;
+        var tag = this.tagName.toLowerCase();
+        //limpiar los valores de los campos
+        if (type == "text" || type == "password" || tag == "textarea") {
+          this.value = "";
+          // los checkboxes y radios, le quitamos el checked
+        } else if (type == "checkbox" || type == "radio") {
+          this.checked = false;
+          // los select quedan con indice -
+        } else if (tag == "select") {
+          this.selectedIndex = -1;
+        }
+      });
+      $("#vaciarFileModal").click();
+      console.log("inputs limpios");
 
+      break;
+    case "fillModalQuestion":
+      tempQuestion = Questions[dataSet];
+      $("#inputIndicativo").val(tempQuestion.indicativo);
+      $("#inputContexto").val(tempQuestion.contexto);
+      $("#inputEnunciado").val(tempQuestion.enunciado);
+      if (!tempQuestion.imageContex == "") {
+        $(".fileinput-new")
+          .removeClass("fileinput-new")
+          .addClass("fileinput-exist");
+        $(".fileinput-exist")
+          .find("img")
+          .prop("src", tempQuestion.imageContex.result);
+      }
+      if (tempQuestion.typeQuestion == "abierta") {
+        $("#typeQuestionRadio1").prop("checked", true);
+        $("#typeQuestionHid").val("abierta");
+        dynamicForm("typeQuestion");
+      } else if (tempQuestion.typeQuestion == "cerrada") {
+        $("#typeQuestionRadio2").prop("checked", true);
+        dynamicForm("typeQuestion");
+        if (tempQuestion.typeAnswer == "unica") {
+          $("#typeAnswerRadio1").prop("checked", true);
+          $("#typeAnswerHid").val("unica");
+          dynamicForm("typeAnswer");
+          tempQuestion.answers.forEach((element, key) => {
+            dynamicForm("createAnswers");
+            if (tempQuestion.answers[key].correct == true) {
+              $("#ansInputRadio_" + key).prop("checked", true);
+            }
+            $("#ansInputText_" + key).val(tempQuestion.answers[key].contenido);
+          });
+        } else if (tempQuestion.typeAnswer == "multiple") {
+          $("#typeAnswerRadio2").prop("checked", true);
+          $("#typeAnswerHid").val("multiple");
+          dynamicForm("typeAnswer");
+          tempQuestion.answers.forEach((element, key) => {
+            dynamicForm("createAnswers");
+            if (tempQuestion.answers[key].correct == true) {
+              $("#ansInputCheck_" + key).prop("checked", true);
+            }
+            $("#ansInputText_" + key).val(tempQuestion.answers[key].contenido);
+          });
+        }
+      }
+      $("#editModalButton").removeClass("d-none")
+      $("#closeModalButton").attr('onClick',"dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#editModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')")
+      $("#saveModalButton").addClass("d-none")
+
+      $("#createQuestion").modal("show");
+      break;
+    case "sendForm":
+      $("#dataQuestions").val(JSON.stringify(Questions));
+      $("#formExam").submit();
+    case "cleanModalQuestions":
+      $("#emptyQuestions").hide("fast");
+      $("#contextQuestion").hide("fast");
+      dynamicForm("vaciarInputs", "formQuestion");
+      dynamicForm("vaciarInputs", "tbodyAnswers");
+      dynamicForm("deleteAllAnswers");
+
+      break;
     default:
       break;
   }

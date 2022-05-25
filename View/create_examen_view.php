@@ -92,7 +92,7 @@
           </div>
         </div>
 
-        <form action="" method="post" id="formExam" style="display: none;">
+        <form action="../Controller/examenController.php" method="post" id="formExam" style="display: none;">
           <div class="row">
             <button type="button" onclick="dynamicForm('backToSelect')" class="btn btn-secondary"> <i class="fa-solid fa-caret-left"></i> Volver</button>
             <input type="hidden" name="typeExam" id="typeExam">
@@ -172,13 +172,17 @@
                 <div id="questionContainer" role="tablist" aria-multiselectable="true" class="card-collapse">
 
             
-
+<div class="col-12 text-center" id="emptyQuestions">
+  <h3>No haz creado ninguna pregunta Aun...</h3>
+</div>
 
                 </div>
+                <input type="hidden" id="dataQuestions" name="dataQuestions">
+                <input type="hidden" id="opcion" name="opcion" value="crearExamen">
+                <button type="button" onclick="dynamicForm('sendForm')"  class="btn btn-success float-right" >Crear Examen</button>
               </div>
             </div>
           </div>
-
         </form>
       </div>
     </div>
@@ -186,323 +190,14 @@
 
   <!-- MODALES -->
   <!-- MODALES Pregunta -->
-  <div class="modal fade" id="createQuestion" tabindex="-1" role="dialog" aria-labelledby="createQuestionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg " role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createQuestionLabel">Creacion de pregunta</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="formQuestion">
-          <p>Acontinuacion seleccione el tipo de pregunta que desea crear: <a style="cursor: pointer;" onclick="$('#exampleQuestion').modal('show')"><span class="material-icons text-primary">help</span></a> </p>
-
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-6 ">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Tipo de pregunta: <span class="text-danger">(*)</span></label>
-                  <select class="form-control selectpicker" onchange="dynamicForm('typeQuestion')" data-style="btn btn-link" name="selectTypeQuestion" id="selectTypeQuestion">
-                    <option value="">Seleccione...</option>
-                    <option value="abierta">Pregunta Abierta</option>
-                    <option value="cerrada">Pregunta cerrada</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6" id="tipoRespuesta">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Tipo de respuestas: <span class="text-danger">(*)</span></label>
-                  <select class="form-control selectpicker" onchange="dynamicForm('typeAnswer')" disabled data-style="btn btn-link" name="selectTypeAnswer" id="selectTypeAnswer">
-                    <option value="">Seleccione...</option>
-                    <option value="unica">Unica respuesta</option>
-                    <option value="multiple">Multiple Repuesta</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-12" id="contextQuestion" style="display: none;">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <div class="row">
-                      <label class="m-0 d-flex align-items-center mr-3">Indicativo: </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Que debe hacer el estudiante. (No obligatorio)"><span class="material-icons text-info">info</span></a>
-                    </div>
-                    <textarea rows="2" type="text" name="inputIndicativo" id="inputIndicativo" class="form-control"></textarea>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <div class="row">
-                      <label class="m-0 d-flex align-items-center mr-3">Contexto: </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Todo lo que debe saber el estudiante para responder. (No obligatorio"><span class="material-icons text-info">info</span></a>
-                    </div>
-                    <textarea rows="3" type="text" name="inputContexto" id="inputContexto" class="form-control"></textarea>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <div class="row">
-                      <label class="m-0 d-flex align-items-center mr-3">Enunciado <span class="text-danger">(*)</span></label> <a data-container="body" data-toggle="tooltip" data-placement="right" title="Pregunta como tal. (Obligatorio)"><span class="material-icons text-info">info</span></a>
-                    </div>
-                    <textarea rows="3" type="text" name="inputEnunciado" id="inputEnunciado" class="form-control"></textarea>
-                  </div>
-                </div>
-                <div class="col-md-12 text-center mt-3">
-                  <div class="col-12 row">
-                    <p>Seleccione una imagen si es necesario: </p><a data-container="body" data-toggle="tooltip" data-placement="right" title="Agregue imagen de contexto o guia si es necesario"><span class="material-icons text-info">info</span></a>
-                  </div>
-                  <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                    <div class="fileinput-new thumbnail img-raised">
-                      <img src="<?= URL_LIBS ?>/img/placeholder.png" alt="...">
-                    </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                    <div>
-                      <span class="btn btn-raised btn-round btn-default btn-file">
-                        <span class="fileinput-new">Select image</span>
-                        <span class="fileinput-exists">Change</span>
-                        <input type="file" name="fileImg" id="fileImg" />
-                      </span>
-                      <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="createAnswers" style="display: none ;" class="col-12 mt-3">
-              <hr>
-              <div class="text-center col-12">
-                <h4 class="">Creacion de opciones de respuesta</h4>
-              </div>
-              <div class="row">
-                <div class="col-md-8 d-flex align-items-center">
-                  <p>Agregue o elimine las respuestas creadas</p>
-                </div>
-                <div class="col-md-4">
-                  <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" onclick="dynamicForm('createAnswers')" class="btn btn-success">
-                      <span class="material-icons">add</span>
-                      Añadir</button>
-                    <button type="button" onclick="dynamicForm('deleteAllAnswers')" class="btn btn-danger">
-                      <span class="material-icons">delete_forever</span>
-                      Limpiar</button>
-                  </div>
-                </div>
-              </div>
-              <div id="answerContainer" class="col-12">
-                <input type="hidden" id="ids_answer">
-                <input type="hidden" id="typeAnswer">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="text-center">Correcta</th>
-                      <th class="text-center">Contenido</th>
-                      <th class="text-center">Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbodyAnswers">
-                    <td id="emptyAns" class="text-center" style="display: none ;" colspan="3">
-                      <h4>No hay respuestas Creadas...</h4>
-                    </td>
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-            <div id="comodinAlert" class="col-12">
-              <div class="rounded alert alert-info text center" role="alert">
-                <b>Seleccione una opcion</b> para ajustar el formulario...
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
-          <button type="button" onclick="dynamicForm('createQuestion')" class="btn btn-primary">Guardar respuesta</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <?php include FOLDER_MODALS . "modalNewQuestion.php"; ?>
+  
   <!-- MODAL EJEMPLO -->
-  <div class="modal fade" id="exampleQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleQuestionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg " role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleQuestionLabel">Ejemplo de Creacion de pregunta</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Acontinuacion seleccione el tipo de pregunta que desea crear: </p>
-
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-6 ">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Tipo de pregunta: <span class="text-danger">(*)</span></label>
-                  <input type="text" class="form-control" readonly="readonly" value="Cerrada">
-
-                </div>
-              </div>
-              <div class="col-md-6" id="tipoRespuesta">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Tipo de respuestas: <span class="text-danger">(*)</span></label>
-                  <input type="text" class="form-control" readonly="readonly" value="Multiple Repuesta">
-
-                </div>
-              </div>
-            </div>
-            <div class="col-12" id="contextQuestion">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <p>Indicativo: <b class="text-danger">(*)</b></p>
-                    <p>Identifica las expresiones de productos de sumas:</p>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <p>Contexto: <b class="text-danger">(*)</b></p>
-                    <p>Una expresíon Productos de sumas - POS-, (Product Of Sums) está conformada por varios términos suma (Multiplicacion booleana) de literales (variable afirmada o negada) que se agrupan en un producto" class="form-control</p>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group bmd-form-group">
-                    <p>Enunciado: <b class="text-danger">(*)</b></p>
-                    <p> Dado el siguiente circuito: </p>
-                  </div>
-                </div>
-                <div class="col-md-12 text-center">
-                  <div class="col-12">Imagen de contexto: </div>
-                  <br>
-
-                  <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                    <div class="fileinput-new thumbnail img-raised">
-                      <img src="<?= URL_LIBS ?>/img/img-example.png" alt="...">
-                    </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="createAnswers" class="col-12 mt-3">
-              <div class="text-center col-12">
-                <h3 class="">Creacion de opciones de respuesta</h4>
-              </div>
-              <div id="answerContainer" class="col-12">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="text-center">Correcta</th>
-                      <th class="text-center">Contenido</th>
-                      <th class="text-center">Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbodyAnswers">
-                    <tr>
-                      <td>
-                        <div class="form-check multiple text-center">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td class="text-right">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">question_answer</i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control" value=" Respuesta de ejemplo 1" placeholder="Contenido Respuesta">
-                        </div>
-                      </td>
-                      <td class="td-actions text-center">
-                        <button type="button" rel="tooltip" class="btn btn-danger">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check multiple text-center">
-                          <label class="form-check-label">
-                            <input class="form-check-input" checked type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td class="text-right">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">question_answer</i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control" value=" Respuesta de ejemplo 2" placeholder="Contenido Respuesta">
-                        </div>
-                      </td>
-                      <td class="td-actions text-center">
-                        <button type="button" rel="tooltip" class="btn btn-danger">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check multiple text-center">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-sign">
-                              <span class="check"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </td>
-                      <td class="text-right">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="material-icons">question_answer</i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control" value="Respuesta de ejemplo 1" placeholder="Contenido Respuesta">
-                        </div>
-                      </td>
-                      <td class="td-actions text-center">
-                        <button onclick="$('#exampleQuestion').modal('hide')" type="button" rel="tooltip" class="btn btn-danger">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+  <?php include FOLDER_MODALS . "modalExampleQuestion.php"; ?>
+  
 
 
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
+<!-- Requerimos los scripts -->
   <?php include FOLDER_TEMPLATE . "scripts.php"; ?>
   <script src="../logic/create_examen_logic.js"></script>
   <script>
