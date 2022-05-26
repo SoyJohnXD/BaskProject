@@ -114,7 +114,7 @@ function dynamicForm(option, dataSet) {
         var element = document.createElement("tr");
         element.id = "answer_" + long;
         texto = `
-                  <td>
+                  <td class="d-flex flex-row align-items-center justify-content-center">
                     <div class="form-check multiple text-center">
                       <label class="form-check-label">
                         <input class="form-check-input" id="ansInputCheck_${long}" name="ansInputCheck_${long}" type="checkbox" >
@@ -124,7 +124,7 @@ function dynamicForm(option, dataSet) {
                       </label>
                     </div>
 
-                    <div class="form-check form-check-radio form-check-inline ">
+                    <div class="form-check form-check-radio unique form-check-inline ">
                     <label class="form-check-label">
                       <input class="form-check-input" type="radio" name="ansInputRadio" id="ansInputRadio_${long}">
                       <span class="circle">
@@ -162,8 +162,8 @@ function dynamicForm(option, dataSet) {
       if (typeAnswer == "unica") {
         $(".multiple").hide();
         $(".multiple").find("input").prop("disabled", true);
-        $(".unique").show("fast");
         $(".unique").find("input").prop("disabled", false);
+        $(".unique").show("fast");
       } else if (typeAnswer == "multiple") {
         $(".unique").hide();
         $(".unique").find("input").prop("disabled", true);
@@ -314,7 +314,7 @@ function dynamicForm(option, dataSet) {
                         <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
                             <i class="material-icons">subject</i>
                         </a>
-                        <button type="button" onclick="dynamicForm('fillModalQuestion',${long})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
+                        <button type="button" onclick="dynamicForm('fillToEdit',${long})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
                             <i class="material-icons">mode_edit</i>
                         </button>
                         <button type="button" onclick="dynamicForm('alertDeleteQuestion',${long})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
@@ -446,14 +446,6 @@ function dynamicForm(option, dataSet) {
       $("#inputIndicativo").val(tempQuestion.indicativo);
       $("#inputContexto").val(tempQuestion.contexto);
       $("#inputEnunciado").val(tempQuestion.enunciado);
-      if (!tempQuestion.imageContex == "") {
-        $(".fileinput-new")
-          .removeClass("fileinput-new")
-          .addClass("fileinput-exist");
-        $(".fileinput-exist")
-          .find("img")
-          .prop("src", tempQuestion.imageContex.result);
-      }
       if (tempQuestion.typeQuestion == "abierta") {
         $("#typeQuestionRadio1").prop("checked", true);
         $("#typeQuestionHid").val("abierta");
@@ -477,7 +469,9 @@ function dynamicForm(option, dataSet) {
           $("#typeAnswerHid").val("multiple");
           dynamicForm("typeAnswer");
           tempQuestion.answers.forEach((element, key) => {
-            dynamicForm("createAnswers");
+            if (!key == 0) {
+              dynamicForm("createAnswers");
+            }
             if (tempQuestion.answers[key].correct == true) {
               $("#ansInputCheck_" + key).prop("checked", true);
             }
@@ -485,16 +479,188 @@ function dynamicForm(option, dataSet) {
           });
         }
       }
-      $("#editModalButton").removeClass("d-none")
-      $("#closeModalButton").attr('onClick',"dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#editModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')")
-      $("#saveModalButton").addClass("d-none")
-
+      
       $("#createQuestion").modal("show");
+      break;
+      case "fillToEdit": // Llenar modal para editar
+        dynamicForm('fillModalQuestion',dataSet)
+        //Modificamos los botones para hacer la edicion
+        $("#editModalButton").removeClass("d-none");
+      $("#editModalButton").attr(
+        "onClick",
+        'dynamicForm("alertEditQuestion",' + dataSet + ")"
+      );
+      $("#closeModalButton").attr(
+        "onClick",
+        "dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#editModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')"
+      );
+      $("#saveModalButton").addClass("d-none");
+      break;
+    case "alertEditQuestion":
+      Swal.fire({
+        title: "¿Estas seguro?",
+        text: "Los cambios que realice remplazaran la informacion de la pregunta anteriormente guardada",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si Editar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dynamicForm("editQuestion", dataSet);
+        }
+      });
+      break;
+    case "editQuestion":
+      if (dynamicForm("validarModalQuestion")) {
+      //Seleccionamos el elemento del objeto y verificamos si el contenido de los inputs es diferente al ya guardado
+      //si es diferente lo actualiza sino le reasigna el valor anterior
+      Questions[dataSet].indicativo =
+        $("#inputIndicativo").val() != Questions[dataSet].indicativo
+          ? $("#inputIndicativo").val()
+          : Questions[dataSet].indicativo;
+      Questions[dataSet].contexto =
+        $("#inputContexto").val() != Questions[dataSet].contexto
+          ? $("#inputContexto").val()
+          : Questions[dataSet].contexto;
+      Questions[dataSet].enunciado =
+        $("#inputEnunciado").val() != Questions[dataSet].enunciado
+          ? $("#inputEnunciado").val()
+          : Questions[dataSet].enunciado;
+      Questions[dataSet].typeQuestion =
+        $("#typeQuestionHid").val() != Questions[dataSet].typeQuestion
+          ? $("#typeQuestionHid").val()
+          : Questions[dataSet].typeQuestion;
+      Questions[dataSet].typeAnswer =
+        $("#typeAnswerHid").val() != Questions[dataSet].typeQuestion
+          ? $("#typeAnswerHid").val()
+          : Questions[dataSet].typeQuestion;
+      if (Questions[dataSet].imageContex == "") {
+        Questions[dataSet].imageContex =
+          $("#fileImg")[0].files.length > 0 ? $("#fileImg")[0].files[0] : "";
+      } else {
+        Questions[dataSet].imageContex =
+          $("#fileImg")[0].files.length > 0
+            ? $("#fileImg")[0].files[0]
+            : Questions[dataSet].imageContex;
+      }
+      answerArray = [];
+      if (typeAnswer == "unica" || typeAnswer == "multiple") {
+        $("#ids_answer")
+          .val()
+          .split(",")
+          .forEach((element) => {
+            isCorrect =
+              typeAnswer == "unica"
+                ? $("#ansInputRadio_" + element).prop("checked")
+                : $("#ansInputCheck_" + element).prop("checked");
+            let answer = {
+              correct: isCorrect,
+              contenido: $("#ansInputText_" + element).val(),
+            };
+            answerArray.push(answer);
+          });
+      }
+      Questions[dataSet].answers = answerArray.length > 0 ? answerArray : "";
+      Swal.fire("Eliminada!", "La pregunta ha sido Editada.", "success");
+      dynamicForm("updateQuestionHtml",dataSet)
+    }
+      break;
+    case "updateQuestionHtml":
+      container = $("#question_" + dataSet);
+      container.empty(); // Vaciamos todo el contenido del Div
+      answerHtml = "";
+      if (!(typeAnswer == "abierta")) {
+        Questions[dataSet].answers.forEach((key) => {
+          if (typeAnswer == "unica") {
+            answerHtml += `
+              <div class="form-check d-flex align-items-center form-check-radio">
+              <label class="form-check-label pl-5 text-dark">
+                <input class="form-check-input" type="radio" name="ansInputRadioQuestion_${dataSet}" id="ansInputRadioQuestion_${dataSet}" >
+                    ${key.contenido}
+                <span class="circle">
+                  <span class="check"></span>
+                </span>
+                </label>
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+          } else if (typeAnswer == "multiple") {
+            answerHtml += `
+              <div class="form-check d-flex align-items-center">
+                <label class="form-check-label pl-5 text-dark">
+                  <input class="form-check-input"  type="checkbox" value="">
+                  ${key.contenido}
+                  <span class="form-check-sign">
+                    <span class="check"></span>
+                  </span>
+                </label>
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+          }
+        });
+      } else {
+        answerHtml = `<div class="form-group">
+          <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Escribe tu respuesta aqui..." rows="3" style="border: solid 1px #212529;border-radius: 6px;padding: 15px;"></textarea>
+        </div>`;
+      }
+      texto = `   <div class="card-header" role="tab" id="headingOne">
+                      <a data-toggle="collapse" data-parent="#questionContainer" href="#collapseOne_${dataSet}" aria-expanded="true" aria-controls="collapseOne_${dataSet}">
+                        Pregunta:
+
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </a>
+                    </div>
+
+                    <div id="collapseOne_${dataSet}" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="card-body row ">
+                        <div class="col-md-10 p-3">
+                        <p>${Questions[dataSet].indicativo}</p>
+                        <p>${Questions[dataSet].contexto}</p>
+                        <p>${Questions[dataSet].enunciado} </p>
+                        <img src="${
+                          !Questions[dataSet].imageContex == ""
+                            ? Questions[dataSet].imageContex.result
+                            : ""
+                        }" class="img-responsive ${
+        Questions[dataSet].imageContex == "" ? "d-none" : ""
+      }"style="max-width: 55%;" alt="...">
+                        <div class="col-md-12 d-flex mt-2 flex-column">
+                        
+                          ${answerHtml}
+                        </div>
+                        </div>
+                        <div class="col-md-2 d-flex flex-md-column p-2 p-md-0 flex-row justify-content-center">
+                        <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
+                            <i class="material-icons">subject</i>
+                        </a>
+                        <button type="button" onclick="dynamicForm('fillModalQuestion',${dataSet})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
+                            <i class="material-icons">mode_edit</i>
+                        </button>
+                        <button type="button" onclick="dynamicForm('alertDeleteQuestion',${dataSet})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
+                            <i class="material-icons">delete</i>
+                        </button>
+                        </div>
+                        
+                      </div>
+                    </div>`;
+      container.html(texto);
+      dynamicForm("cleanModalQuestions");
+      $("#createQuestion").modal("hide");
+
       break;
     case "sendForm":
       $("#dataQuestions").val(JSON.stringify(Questions));
       $("#formExam").submit();
     case "cleanModalQuestions":
+      $("#createAnswers").hide("fast");
       $("#emptyQuestions").hide("fast");
       $("#contextQuestion").hide("fast");
       dynamicForm("vaciarInputs", "formQuestion");
