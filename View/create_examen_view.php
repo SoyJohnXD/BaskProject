@@ -171,15 +171,15 @@
                 <input type="hidden" id="ids_question">
                 <div id="questionContainer" role="tablist" aria-multiselectable="true" class="card-collapse">
 
-            
-<div class="col-12 text-center" id="emptyQuestions">
-  <h3>No haz creado ninguna pregunta Aun...</h3>
-</div>
+
+                  <div class="col-12 text-center" id="emptyQuestions">
+                    <h3>No haz creado ninguna pregunta Aun...</h3>
+                  </div>
 
                 </div>
                 <input type="hidden" id="dataQuestions" name="dataQuestions">
                 <input type="hidden" id="opcion" name="opcion" value="crearExamen">
-                <button type="button" onclick="dynamicForm('sendForm')"  class="btn btn-success float-right" >Crear Examen</button>
+                <button type="button" onclick="dynamicForm('sendForm')" class="btn btn-success float-right">Crear Examen</button>
               </div>
             </div>
           </div>
@@ -191,13 +191,13 @@
   <!-- MODALES -->
   <!-- MODALES Pregunta -->
   <?php include FOLDER_MODALS . "modalNewQuestion.php"; ?>
-  
+
   <!-- MODAL EJEMPLO -->
   <?php include FOLDER_MODALS . "modalExampleQuestion.php"; ?>
-  
 
 
-<!-- Requerimos los scripts -->
+
+  <!-- Requerimos los scripts -->
   <?php include FOLDER_TEMPLATE . "scripts.php"; ?>
   <script src="../logic/create_examen_logic.js"></script>
   <script>

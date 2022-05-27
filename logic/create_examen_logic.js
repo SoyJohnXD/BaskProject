@@ -235,6 +235,7 @@ function dynamicForm(option, dataSet) {
                 ? $("#fileImg")[0].files[0]
                 : "",
             answers: answerArray.length > 0 ? answerArray : "",
+            variations: []
           };
           console.log(temporalQuestion);
           var element = document.createElement("div");
@@ -311,9 +312,9 @@ function dynamicForm(option, dataSet) {
                         </div>
                         </div>
                         <div class="col-md-2 d-flex flex-md-column p-2 p-md-0 flex-row justify-content-center">
-                        <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
+                        <button type="button" onclick="dynamicForm('fillToVariacion',${long})" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
                             <i class="material-icons">subject</i>
-                        </a>
+                        </button>
                         <button type="button" onclick="dynamicForm('fillToEdit',${long})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
                             <i class="material-icons">mode_edit</i>
                         </button>
@@ -479,13 +480,13 @@ function dynamicForm(option, dataSet) {
           });
         }
       }
-      
+
       $("#createQuestion").modal("show");
       break;
-      case "fillToEdit": // Llenar modal para editar
-        dynamicForm('fillModalQuestion',dataSet)
-        //Modificamos los botones para hacer la edicion
-        $("#editModalButton").removeClass("d-none");
+    case "fillToEdit": // Llenar modal para editar
+      dynamicForm("fillModalQuestion", dataSet);
+      //Modificamos los botones para hacer la edicion
+      $("#editModalButton").removeClass("d-none");
       $("#editModalButton").attr(
         "onClick",
         'dynamicForm("alertEditQuestion",' + dataSet + ")"
@@ -496,6 +497,7 @@ function dynamicForm(option, dataSet) {
       );
       $("#saveModalButton").addClass("d-none");
       break;
+
     case "alertEditQuestion":
       Swal.fire({
         title: "¿Estas seguro?",
@@ -513,58 +515,58 @@ function dynamicForm(option, dataSet) {
       break;
     case "editQuestion":
       if (dynamicForm("validarModalQuestion")) {
-      //Seleccionamos el elemento del objeto y verificamos si el contenido de los inputs es diferente al ya guardado
-      //si es diferente lo actualiza sino le reasigna el valor anterior
-      Questions[dataSet].indicativo =
-        $("#inputIndicativo").val() != Questions[dataSet].indicativo
-          ? $("#inputIndicativo").val()
-          : Questions[dataSet].indicativo;
-      Questions[dataSet].contexto =
-        $("#inputContexto").val() != Questions[dataSet].contexto
-          ? $("#inputContexto").val()
-          : Questions[dataSet].contexto;
-      Questions[dataSet].enunciado =
-        $("#inputEnunciado").val() != Questions[dataSet].enunciado
-          ? $("#inputEnunciado").val()
-          : Questions[dataSet].enunciado;
-      Questions[dataSet].typeQuestion =
-        $("#typeQuestionHid").val() != Questions[dataSet].typeQuestion
-          ? $("#typeQuestionHid").val()
-          : Questions[dataSet].typeQuestion;
-      Questions[dataSet].typeAnswer =
-        $("#typeAnswerHid").val() != Questions[dataSet].typeQuestion
-          ? $("#typeAnswerHid").val()
-          : Questions[dataSet].typeQuestion;
-      if (Questions[dataSet].imageContex == "") {
-        Questions[dataSet].imageContex =
-          $("#fileImg")[0].files.length > 0 ? $("#fileImg")[0].files[0] : "";
-      } else {
-        Questions[dataSet].imageContex =
-          $("#fileImg")[0].files.length > 0
-            ? $("#fileImg")[0].files[0]
-            : Questions[dataSet].imageContex;
+        //Seleccionamos el elemento del objeto y verificamos si el contenido de los inputs es diferente al ya guardado
+        //si es diferente lo actualiza sino le reasigna el valor anterior
+        Questions[dataSet].indicativo =
+          $("#inputIndicativo").val() != Questions[dataSet].indicativo
+            ? $("#inputIndicativo").val()
+            : Questions[dataSet].indicativo;
+        Questions[dataSet].contexto =
+          $("#inputContexto").val() != Questions[dataSet].contexto
+            ? $("#inputContexto").val()
+            : Questions[dataSet].contexto;
+        Questions[dataSet].enunciado =
+          $("#inputEnunciado").val() != Questions[dataSet].enunciado
+            ? $("#inputEnunciado").val()
+            : Questions[dataSet].enunciado;
+        Questions[dataSet].typeQuestion =
+          $("#typeQuestionHid").val() != Questions[dataSet].typeQuestion
+            ? $("#typeQuestionHid").val()
+            : Questions[dataSet].typeQuestion;
+        Questions[dataSet].typeAnswer =
+          $("#typeAnswerHid").val() != Questions[dataSet].typeQuestion
+            ? $("#typeAnswerHid").val()
+            : Questions[dataSet].typeQuestion;
+        if (Questions[dataSet].imageContex == "") {
+          Questions[dataSet].imageContex =
+            $("#fileImg")[0].files.length > 0 ? $("#fileImg")[0].files[0] : "";
+        } else {
+          Questions[dataSet].imageContex =
+            $("#fileImg")[0].files.length > 0
+              ? $("#fileImg")[0].files[0]
+              : Questions[dataSet].imageContex;
+        }
+        answerArray = [];
+        if (typeAnswer == "unica" || typeAnswer == "multiple") {
+          $("#ids_answer")
+            .val()
+            .split(",")
+            .forEach((element) => {
+              isCorrect =
+                typeAnswer == "unica"
+                  ? $("#ansInputRadio_" + element).prop("checked")
+                  : $("#ansInputCheck_" + element).prop("checked");
+              let answer = {
+                correct: isCorrect,
+                contenido: $("#ansInputText_" + element).val(),
+              };
+              answerArray.push(answer);
+            });
+        }
+        Questions[dataSet].answers = answerArray.length > 0 ? answerArray : "";
+        Swal.fire("Eliminada!", "La pregunta ha sido Editada.", "success");
+        dynamicForm("updateQuestionHtml", dataSet);
       }
-      answerArray = [];
-      if (typeAnswer == "unica" || typeAnswer == "multiple") {
-        $("#ids_answer")
-          .val()
-          .split(",")
-          .forEach((element) => {
-            isCorrect =
-              typeAnswer == "unica"
-                ? $("#ansInputRadio_" + element).prop("checked")
-                : $("#ansInputCheck_" + element).prop("checked");
-            let answer = {
-              correct: isCorrect,
-              contenido: $("#ansInputText_" + element).val(),
-            };
-            answerArray.push(answer);
-          });
-      }
-      Questions[dataSet].answers = answerArray.length > 0 ? answerArray : "";
-      Swal.fire("Eliminada!", "La pregunta ha sido Editada.", "success");
-      dynamicForm("updateQuestionHtml",dataSet)
-    }
       break;
     case "updateQuestionHtml":
       container = $("#question_" + dataSet);
@@ -667,6 +669,160 @@ function dynamicForm(option, dataSet) {
       dynamicForm("vaciarInputs", "tbodyAnswers");
       dynamicForm("deleteAllAnswers");
 
+      break;
+    case "fillToVariacion": // Llenar modal para editar
+      dynamicForm("fillModalQuestion", dataSet);
+      //Modificamos los botones para hacer la edicion
+
+      $("#variacionModalButton").removeClass("d-none");
+      $("#variacionModalButton").attr(
+        "onClick",
+        'dynamicForm("createVarQuestion",' + dataSet + ")"
+      );
+      $("#closeModalButton").attr(
+        "onClick",
+        "dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#variacionModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')"
+      );
+      $("#saveModalButton").addClass("d-none");
+      break;
+
+    case "createVarQuestion":
+      if (dynamicForm("validarModalQuestion")) {
+        
+        if (typeAnswer == "unica" || typeAnswer == "multiple") {
+          $("#ids_answer")
+            .val()
+            .split(",")
+            .forEach((element) => {
+              isCorrect =
+                typeAnswer == "unica"
+                  ? $("#ansInputRadio_" + element).prop("checked")
+                  : $("#ansInputCheck_" + element).prop("checked");
+              let answer = {
+                correct: isCorrect,
+                contenido: $("#ansInputText_" + element).val(),
+              };
+              answerArray.push(answer);
+            });
+        }
+        variationObject = {
+          temporalId: long,
+          typeQuestion: $("#typeQuestionHid").val(),
+          typeAnswer: $("#typeAnswerHid").val(),
+          indicativo: $("#inputIndicativo").val(),
+          contexto: $("#inputContexto").val(),
+          enunciado: $("#inputEnunciado").val(),
+          imageContex:
+            $("#fileImg")[0].files.length > 0 ? $("#fileImg")[0].files[0] : "",
+          answers: answerArray.length > 0 ? answerArray : "",
+        };
+        Questions[dataSet].variations.push(variationObject);  
+        $("#variations_"+dataSet).remove()
+        dynamicForm("fillVariationshtml",dataSet)
+      }
+      break;
+    case "fillVariationshtml":
+      items_carrousel = "";
+      indicators_carrousel = "";
+
+      Questions[dataSet].variations.forEach((element,keyVar) => {
+        answerHtml = "";
+      if (!(typeAnswer == "abierta")) {
+        Questions[dataSet].variations[keyVar].answers.forEach((key) => {
+          if (typeAnswer == "unica") {
+            answerHtml += `
+              <div class="form-check d-flex align-items-center form-check-radio">
+              <label class="form-check-label pl-5 text-dark">
+                <input class="form-check-input" type="radio" name="ansInputRadioQuestion_${keyVar}" id="ansInputRadioQuestion_${keyVar}" >
+                    ${key.contenido}
+                <span class="circle">
+                  <span class="check"></span>
+                </span>
+                </label>
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+          } else if (typeAnswer == "multiple") {
+            answerHtml += `
+              <div class="form-check d-flex align-items-center">
+                <label class="form-check-label pl-5 text-dark">
+                  <input class="form-check-input"  type="checkbox" value="">
+                  ${key.contenido}
+                  <span class="form-check-sign">
+                    <span class="check"></span>
+                  </span>
+                </label>
+                ${
+                  key.correct
+                    ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                    : ""
+                }
+              </div>`;
+          }
+        });
+      } else {
+        answerHtml = `<div class="form-group">
+          <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Escribe tu respuesta aqui..." rows="3" style="border: solid 1px #212529;border-radius: 6px;padding: 15px;"></textarea>
+        </div>`;
+      }
+      debugger
+        items_carrousel += `
+              <div class="carousel-item ${(keyVar)==0?'active':''}">
+                <div class="col-md-10 p-3">
+                <p>${Questions[dataSet].variations[keyVar].indicativo}</p>
+                <p>${Questions[dataSet].variations[keyVar].contexto}</p>
+                <p>${Questions[dataSet].variations[keyVar].enunciado} </p>
+                <img src="${
+                  !Questions[dataSet].variations[keyVar].imageContex == ""
+                    ? Questions[dataSet].variations[keyVar].imageContex.result
+                    : ""
+                }" class="img-responsive ${
+                    Questions[dataSet].variations[keyVar].imageContex == "" ? "d-none" : ""
+                  }"style="max-width: 55%;" alt="...">
+                        <div class="col-md-12 d-flex mt-2 flex-column">
+                        
+                  ${answerHtml}
+                </div>
+                </div>
+                <div class="col-md-2 d-flex flex-md-column p-2 p-md-0 flex-row justify-content-center">
+                <button type="button" onclick="dynamicForm('alertDeleteQuestionVariable',${dataSet+"|"+keyVar})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
+                    <i class="material-icons">delete</i>
+                </button>
+                </div>
+                
+              </div>
+           
+              `;
+              indicators_carrousel += `<li data-target="#carouselQuestion_${dataSet}_indicators" data-slide-to="${keyVar}" class="${(keyVar)==0?'active':''}active"></li>`
+      });
+      texto = `
+      <div class="col-md-12" id="variations_${dataSet}">
+        <hr>
+        <h3>Variaciones generadas</h3>
+        <div id="carouselExampleIndicators" class="carousel slide col-md-12" data-ride="carousel">
+          <ol class="carousel-indicators" style="filter:brightness(0) ;">
+             ${indicators_carrousel}
+          </ol>
+          <div class="carousel-inner">
+             ${items_carrousel}
+          </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" style="filter:brightness(0) ;" aria-hidden="true"></span>
+              <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" style="filter:brightness(0) ;" aria-hidden="true"></span>
+              <span class="sr-only">Siguiente</span>
+            </a>
+      </div>
+    </div>
+          `;
+          $("#collapseOne_"+dataSet).append(texto)
+          dynamicForm("cleanModalQuestions");
+          $("#createQuestion").modal("hide");
       break;
     default:
       break;

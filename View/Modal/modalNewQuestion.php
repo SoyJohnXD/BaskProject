@@ -3,9 +3,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="createQuestionLabel">Creacion de pregunta</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body" id="formQuestion">
         <p>Acontinuacion seleccione el tipo de pregunta que desea crear: <a style="cursor: pointer;" onclick="$('#exampleQuestion').modal('show')"><span class="material-icons text-primary">help</span></a> </p>
@@ -151,9 +148,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="closeModalButton" data-dismiss="modal">cerrar</button>
-        <button type="button" onclick="dynamicForm('editQuestion')" id="editModalButton"  class="btn btn-Warning d-none">Editar respuesta</button>
-        <button type="button" onclick="dynamicForm('createQuestion')" id="saveModalButton" class="btn btn-primary">Guardar respuesta</button>
+        <button type="button" class="btn btn-secondary" id="closeModalButton" data-dismiss="modal">Cerrar</button>
+        <button type="button" onclick="dynamicForm('editQuestion')" id="editModalButton"  class="btn btn-warning d-none">Editar Pregunta</button>
+        <button type="button"  id="variacionModalButton"  class="btn btn-info d-none">Crear variacion</button>
+        <button type="button" onclick="dynamicForm('createQuestion')" id="saveModalButton" class="btn btn-primary">Guardar Pgunta</button>
       </div>
     </div>
   </div>
