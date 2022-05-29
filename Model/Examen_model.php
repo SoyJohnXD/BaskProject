@@ -1,78 +1,75 @@
 <?php
 
-class Examen_model{
+class Examen_model
+{
 
-        private $db;
-        private $examenes;
+    private $db;
+    private $examenes;
 
-        private $rol;
+    private $rol;
 
-        public function __CONSTRUCT()
-        {
-            try 
-            {
-                require_once "../Model/Conexion.php";
-                $this->db = Conexion::Conectar();
-                $this->usuarios=array();
-                $this->examenes=array();
-            } 
-            catch (Exception $e) 
-            {
-                die($e->getMessage());
+    public function __CONSTRUCT()
+    {
+        try {
+            require_once "../Model/Conexion.php";
+            $this->db = Conexion::Conectar();
+            $this->usuarios = array();
+            $this->examenes = array();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function Listar()
+    {
+        try {
+            $stm = $this->db->query("call pa_listar_users");
+
+            while ($filas = $stm->fetch(PDO::FETCH_ASSOC)) {
+                $this->usuarios[] = $filas;
             }
+
+            return $this->usuarios;
+        } catch (Exception $e) {
+            die($e->getMessage());
         }
+    }
 
-        public function Listar()
-        {
-            try {
-                $stm = $this->db->query("call pa_listar_users");
 
-                while($filas = $stm->fetch(PDO::FETCH_ASSOC)) {
-                    $this->usuarios[]=$filas;
-                }
 
-                return $this->usuarios;
-            } 
-            catch (Exception $e) {
-                die($e->getMessage());
+
+
+    function InsertarExamen($idProfesor, $idMateria, $corte, $tipo)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_examen_insert (:p_fk_profesor,:p_fk_materia,:p_corte,:p_tipo)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(
+                ':p_fk_profesor' => intval($idProfesor), ':p_fk_materia' => intval($idMateria), ':p_corte' => intval($corte),
+                ':p_tipo' => $tipo
+            ));
+            $num = $sentencia->rowCount();
+            if ($num >= 1) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
             }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
+    }
 
-         
-
-        function CargarUsuario($usuDocumento)
-        {
-            try{
-                // hacer uso de una declaración preparada para evitar la inyección de sql
-                            $sentencia = $this->db->prepare("call PA_Carga_Usuario (:cedula)");
-                            // declaración if-else en la ejecución de nuestra declaración preparada
-                           $sentencia->execute(array(':cedula' => $usuDocumento)); 
-                           $fila = $sentencia->fetch(PDO::FETCH_ASSOC);
-                        return [
-                            $fila['id_usuario'],
-                                 $fila['cedula'],
-                                 $fila['nombres'],
-                                 $fila['apellidos'],
-                                 $fila['telefono'],
-                                 $fila['celular'],
-                                 $fila['email'],
-                                 $fila['direccion'],
-                                 $fila['clave']
-                                 ];
-                        }
-                        catch(PDOException $e){
-                           echo $e->getMessage();
-                        }
-        }
-
-
-        /* function InsertarUsuAdminHotel($usuNombre,$usuApellido,$usuDocumento, $usuCelular,$usuTelefono,$usuDireccion, $usuEmail,$usuPassword,$usuRol)
+    /* function InsertarPregunta($tipoPregunta,$indicativo,$contexto, $enunciado,$imagen,$fk_variacion)
         { try{
             // hacer uso de una declaración preparada para evitar la inyección de sql
-                        $sentencia = $this->db->prepare("call PA_Insertar_Usuario_AD (:cedula,:nombres,:apellidos,:telefono,:celular,:email,:direccion,:clave,:idRol)");
+                        $sentencia = $this->db->prepare("call pa_pregunta_insert (:p_tipo_pregunta,:p_indicativo,:p_contexto,:p_enunciado,:p_fk_variacion,:imagen)");
                         // declaración if-else en la ejecución de nuestra declaración preparada
-                       $sentencia->execute(array(':cedula' => $usuDocumento , ':nombres' => $usuNombre , ':apellidos' => $usuApellido,
-                        ':telefono' => $usuTelefono,':celular' => $usuCelular,':email' => $usuEmail,':direccion' => $usuDireccion,':clave' => $usuPassword,':idRol' => $usuRol));
+                        $sentencia->execute(array(':p_tipo_pregunta' => $tipoPregunta , ':p_indicativo' => $indicativo , ':p_contexto' => $contexto,
+                        ':p_enunciado' => $enunciado,':p_fk_variacion' => $fk_variacion,':imagen' => $imagen));
+                        var_dump($sentencia);die;
                         $num = $sentencia->rowCount();
                         if ($num >= 1) {
                           $Bool = true;
@@ -87,72 +84,93 @@ class Examen_model{
                     }
                 
             
-        }
-  function ActualizarUsu($usuNombre,$usuApellido,$usuDocumento, $usuCelular,$usuTelefono,$usuDireccion, $usuEmail,$usuPassword)
-  {
-      try{
-        // hacer uso de una declaración preparada para evitar la inyección de sql
-                    $sentencia = $this->db->prepare("call PA_Actualizar_Usuario (:nombres,:apellidos,:telefono,:celular,:email,:direccion,:clave,:cedula)");
-                    // declaración if-else en la ejecución de nuestra declaración preparada
-                   $sentencia->execute(array(':cedula' => $usuDocumento , ':nombres' => $usuNombre , ':apellidos' => $usuApellido,
-                   ':telefono' => $usuTelefono,':celular' => $usuCelular,':email' => $usuEmail,':direccion' => $usuDireccion,':clave' => $usuPassword));
-                   $num = $sentencia->rowCount();
-                   if ($num == 1) {
-                     $Bool = true;
-                     return $Bool;                      
-                    }else{
-                     $Bool = false;
-                     return $Bool;
-                     } 
+        } */
 
-                }
-                catch(PDOException $e){
-                   echo $e->getMessage();
-                }
-    
-  } */
-  
-  
-  
-  function ValidarUsuario($user, $pass )
-  {   try{
-        // hacer uso de una declaración preparada para evitar la inyección de sql
-                    $sentencia = $this->db->prepare("call pa_usuario_validar (:p_usuario,:p_pass)");
-                    // declaración if-else en la ejecución de nuestra declaración preparada
-                   $sentencia->execute(array(':p_usuario' => $user,':p_pass'=>$pass)); 
-                   $num = $sentencia->rowCount();
-                   if ($num == true) {
-                    $Bool = true;
-                    return $Bool;                      
-                   }else{
-                    $Bool = false;
-                    return $Bool;
-                    }
-                }
-                catch(PDOException $e){
-                   echo $e->getMessage();
-                }
-  }
+    function InsertarPregunta($tipoPregunta, $indicativo, $contexto, $enunciado, $imagen, $fk_variacion)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+           // $sentencia = $this->db->prepare("call pa_pregunta_insert (:p_tipo_pregunta,:p_indicativo,:p_contexto,:p_enunciado,:p_fk_variacion,:imagen)");
+            $sentencia = $this->db->prepare("call pa_pregunta_insert (?, ?, ?, ?, ?, ?)");
 
-  function RecuperarClave ($usuDocumento, $usuEmail, $newClave) {
-    try {
-        
-        $sentencia = $this->db->prepare("call PA_Recuperar_Clave (:cedula,:email,:clave)");
-        $sentencia->execute(array(':cedula' => $usuDocumento,':email'=>$usuEmail, ':clave'=>$newClave));
-
-        }catch(PDOException $e){
+            $sentencia->bindParam(1, $tipoPregunta);
+            $sentencia->bindParam(2, $indicativo);
+            $sentencia->bindParam(3, $contexto);
+            $sentencia->bindParam(4, $enunciado);
+            $sentencia->bindParam(5, $fk_variacion);
+            $sentencia->bindParam(6, $imagen, PDO::PARAM_LOB);
+            $sentencia->execute();
+            $num = $sentencia->rowCount();
+            if ($num >= 1) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
+            }
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
-        
-        if(!$sentencia){
-            $Bool = false;
-            return $Bool;
-        }else{
-            $Bool = true;
-            return $Bool;
+    }
+    function InsertarRespuestas($idPregunta, $contenido, $estado)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_respuesta_insert (:p_fk_pregunta,:p_contenido,:p_estado)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_fk_pregunta' => $idPregunta, ':p_contenido' => $contenido, ':p_estado' => $estado));
+            $num = $sentencia->rowCount();
+            if ($num >= 1) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
     }
 
-}
+    function InsertarPregunta_examen($idPregunta, $idExamen)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_pregunta_examen_insert (:p_fk_examen,:p_fk_pregunta)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_fk_examen' => $idExamen, ':p_fk_pregunta' => $idPregunta));
+            $num = $sentencia->rowCount();
+            if ($num >= 1) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function InsertarVariacion_pregunta($idPregunta)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_variacion_pregunta (:p_fk_pregunta)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_fk_pregunta' => $idPregunta));
+            $num = $sentencia->rowCount();
+            if ($num >= 1) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     
-?>
+}

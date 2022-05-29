@@ -496,6 +496,7 @@ function dynamicForm(option, dataSet) {
         "dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#editModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')"
       );
       $("#saveModalButton").addClass("d-none");
+      $("#variacionModalButton").addClass("d-none");
       break;
 
     case "alertEditQuestion":
@@ -640,17 +641,16 @@ function dynamicForm(option, dataSet) {
                         </div>
                         </div>
                         <div class="col-md-2 d-flex flex-md-column p-2 p-md-0 flex-row justify-content-center">
-                        <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
+                        <button type="button" onclick="dynamicForm('fillToVariacion',${dataSet})" class="btn btn-info btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Añadir Variacion.">
                             <i class="material-icons">subject</i>
-                        </a>
-                        <button type="button" onclick="dynamicForm('fillModalQuestion',${dataSet})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
+                        </button>
+                        <button type="button" onclick="dynamicForm('fillToEdit',${dataSet})" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd" data-toggle="tooltip" data-placement="right" title="Editar.">
                             <i class="material-icons">mode_edit</i>
                         </button>
                         <button type="button" onclick="dynamicForm('alertDeleteQuestion',${dataSet})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
                             <i class="material-icons">delete</i>
                         </button>
                         </div>
-                        
                       </div>
                     </div>`;
       container.html(texto);
@@ -684,11 +684,20 @@ function dynamicForm(option, dataSet) {
         "dynamicForm('cleanModalQuestions');$('#createQuestion').modal('hide');$('#saveModalButton').removeClass('d-none');$('#variacionModalButton').addClass('d-none');$('#closeModalButton').attr('onClick','')"
       );
       $("#saveModalButton").addClass("d-none");
+      $("#editModalButton").addClass("d-none");
       break;
 
     case "createVarQuestion":
       if (dynamicForm("validarModalQuestion")) {
-        
+        if ($("#typeQuestionHid").val()== "abierta") {
+          typeAnswer = $("#typeQuestionHid").val();
+          console.log("abierta");
+        }else{
+          typeAnswer = $("#typeAnswerHid").val();
+          console.log("cerrada");
+
+        }
+        answerArray = [];
         if (typeAnswer == "unica" || typeAnswer == "multiple") {
           $("#ids_answer")
             .val()
@@ -727,9 +736,9 @@ function dynamicForm(option, dataSet) {
 
       Questions[dataSet].variations.forEach((element,keyVar) => {
         answerHtml = "";
-      if (!(typeAnswer == "abierta")) {
+      if (!(Questions[dataSet].variations[keyVar].typeQuestion == "abierta")) {
         Questions[dataSet].variations[keyVar].answers.forEach((key) => {
-          if (typeAnswer == "unica") {
+          if (Questions[dataSet].variations[keyVar].typeAnswer == "unica") {
             answerHtml += `
               <div class="form-check d-flex align-items-center form-check-radio">
               <label class="form-check-label pl-5 text-dark">
@@ -745,7 +754,7 @@ function dynamicForm(option, dataSet) {
                     : ""
                 }
               </div>`;
-          } else if (typeAnswer == "multiple") {
+          } else if (Questions[dataSet].variations[keyVar].typeAnswer == "multiple") {
             answerHtml += `
               <div class="form-check d-flex align-items-center">
                 <label class="form-check-label pl-5 text-dark">
@@ -770,8 +779,8 @@ function dynamicForm(option, dataSet) {
       }
       debugger
         items_carrousel += `
-              <div class="carousel-item ${(keyVar)==0?'active':''}">
-                <div class="col-md-10 p-3">
+              <div class=" p-3 carousel-item ${(keyVar)==0?'active':''}">
+                <div class="col-md-10 p-3 ml-5 p-4 pl-5">
                 <p>${Questions[dataSet].variations[keyVar].indicativo}</p>
                 <p>${Questions[dataSet].variations[keyVar].contexto}</p>
                 <p>${Questions[dataSet].variations[keyVar].enunciado} </p>
@@ -787,8 +796,8 @@ function dynamicForm(option, dataSet) {
                   ${answerHtml}
                 </div>
                 </div>
-                <div class="col-md-2 d-flex flex-md-column p-2 p-md-0 flex-row justify-content-center">
-                <button type="button" onclick="dynamicForm('alertDeleteQuestionVariable',${dataSet+"|"+keyVar})" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
+                <div class="col-md-10 pl-5 ml-5 p-md-0">
+                <button type="button" onclick="dynamicForm('alertDeleteQuestionVariable','${dataSet+"|"+keyVar}')" class="btn btn-danger btn-just-icon btn-fill btn-round" data-toggle="tooltip" data-placement="right" title="Eliminar.">
                     <i class="material-icons">delete</i>
                 </button>
                 </div>
@@ -806,7 +815,7 @@ function dynamicForm(option, dataSet) {
           <ol class="carousel-indicators" style="filter:brightness(0) ;">
              ${indicators_carrousel}
           </ol>
-          <div class="carousel-inner">
+          <div class="carousel-inner p-5">
              ${items_carrousel}
           </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -824,6 +833,31 @@ function dynamicForm(option, dataSet) {
           dynamicForm("cleanModalQuestions");
           $("#createQuestion").modal("hide");
       break;
+      case "alertDeleteQuestionVariable":
+      Swal.fire({
+        title: "¿Estas seguro de borrar la variacion de la pregunta?",
+        text: "No puedes recuperar esta iformacion!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dynamicForm("deleteVariation", dataSet);
+        }
+      });
+      break;
+      case"deleteVariation":
+      ids = dataSet.split("|");
+      Questions[ids[0]].variations.splice(ids[1],1)
+      $("#variations_"+ids[0]).remove()
+      if (Questions[ids[0]].variations.length > 0) {
+        dynamicForm("fillVariationshtml",ids[0])
+      }
+      Swal.fire("Eliminada!", "La pregunta ha sido eliminada.", "success");
+
+      break
     default:
       break;
   }

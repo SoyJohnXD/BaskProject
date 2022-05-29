@@ -177,7 +177,7 @@
                   </div>
 
                 </div>
-                <input type="hidden" id="dataQuestions" name="dataQuestions">
+                <input type="text" id="dataQuestions" name="dataQuestions">
                 <input type="hidden" id="opcion" name="opcion" value="crearExamen">
                 <button type="button" onclick="dynamicForm('sendForm')" class="btn btn-success float-right">Crear Examen</button>
               </div>
