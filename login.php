@@ -32,7 +32,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="View/usuario.php" class="nav-link">
               <i class="material-icons">boy</i> Registrate
             </a>
           </li>
@@ -55,7 +55,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <form class="form" method="post" action="Controller/UsuarioController.php">
-              <div class="card card-login card-hidden">
+              <div class="card card-login card-hidden">            
                 <div class="card-header card-header-primary text-center">
                   <h4 class="">¡Logueate Ahora!</h4>
 

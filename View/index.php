@@ -56,6 +56,7 @@
             </div>
           </div>
         </section>
+        <!--
         <div class="col-lg-4 ms-auto me-auto p-lg-4 mt-lg-0 mt-4">
           <div class="rotating-card-container">
             <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
@@ -76,6 +77,58 @@
             </div>
           </div>
         </div>
+
+
+        <div class="col-md-4 mt-md-0 mt-4">
+          <a href="./sections/page-sections/pricing.html">
+            <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
+              <img class="w-100" src="../assets/img/Devices.jpg" alt="img" loading="lazy">
+            </div>
+            <div class="mt-2 ms-2">
+              <h6 class="mb-0">Pricing</h6>
+              <p class="text-secondary text-sm font-weight-normal">8 Examples</p>
+            </div>
+          </a>
+        </div>
+-->
+
+        <div class="row">
+          <div class="col-md-4 mt-md-0">
+            <a href="./sections/page-sections/hero-sections.html">
+              <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
+                <img class="w-100" src="../assets/img/Devices.jpg" alt="img" loading="lazy">
+              </div>
+              <div class="mt-2 ms-2">
+                <h6 class="mb-0">Crea tus examenes <br>Desde Cualquier Lugar</h6>
+                <p class="text-secondary text-sm font-weight-normal"></p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 mt-md-0 mt-4">
+            <a href="./sections/page-sections/features.html">
+              <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
+              <img class="w-100" src="../assets/img/facil2.jpg" alt="img" loading="lazy">
+              </div>
+              <div class="mt-2 ms-2">
+                <h6 class="mb-0">Rapido</h6>
+                <p class="text-secondary text-sm font-weight-normal"></p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 mt-md-0 mt-4">
+            <a href="./sections/page-sections/pricing.html">
+              <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
+              <img class="w-100" src="../assets/img/plataforma.jpg" alt="img" loading="lazy">
+              </div>
+              <div class="mt-2 ms-2">
+                <h6 class="mb-0">Una plaforma <br>facil de utilizar</h6>
+                <p class="text-secondary text-sm font-weight-normal"></p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

@@ -31,5 +31,28 @@ switch ($opcion) {
         
         break;
 
+
+        case 'registrar':
+            include "../config.php";
+                $R_Nombre = $_REQUEST["R_Nombre"];
+                $R_Apellido =$_REQUEST["R_Apellido"];
+                $R_TipoDoc = $_REQUEST["R_TipoDoc"];
+                $R_NumDoc = $_REQUEST["R_NumDoc"];
+                $R_Email = $_REQUEST["R_Email"];
+                $R_Tele = $_REQUEST["R_Tele"];
+                $R_Pass = $_REQUEST["R_Pass"];
+                
+                
+                
+                $res = $Usuario->registroProfesor($R_Nombre, $R_Apellido, $R_TipoDoc, $R_NumDoc, $R_Email, $R_Tele, $R_Pass);
+                if ($res == true) {
+                    $_SESSION['documento']= $txtDocumento;
+                    header('Location: ../View/index.php');
+                }else {
+                    header('Location: ../login.php?result=login');
+                }                    
+                
+                break;
+
     
 }
