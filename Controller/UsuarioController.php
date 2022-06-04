@@ -22,7 +22,7 @@ switch ($opcion) {
         
         $res = $Usuario->ValidarUsuario($uName, $uPass);
         if ($res == true) {
-            $_SESSION['documento']= $txtDocumento;
+            $_SESSION['id']= 1;
             header('Location: ../View/index.php');
         }else {
             header('Location: ../login.php?result=login');

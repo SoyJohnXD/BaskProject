@@ -5,6 +5,8 @@ class Examen_model
 
     private $db;
     private $examenes;
+    private $questions;
+    private $answer;
 
     private $rol;
 
@@ -15,6 +17,8 @@ class Examen_model
             $this->db = Conexion::Conectar();
             $this->usuarios = array();
             $this->examenes = array();
+            $this->questions = array();
+            $this->answer = array();
         } catch (Exception $e) {
             die($e->getMessage());
         }
@@ -39,15 +43,15 @@ class Examen_model
 
 
 
-    function InsertarExamen($idProfesor, $idMateria, $corte, $tipo)
+    function InsertarExamen($idProfesor, $idMateria, $corte, $tipo,$descripcion)
     {
         try {
             // hacer uso de una declaración preparada para evitar la inyección de sql
-            $sentencia = $this->db->prepare("call pa_examen_insert (:p_fk_profesor,:p_fk_materia,:p_corte,:p_tipo)");
+            $sentencia = $this->db->prepare("call pa_examen_insert (:p_fk_profesor,:p_fk_materia,:p_corte,:p_tipo,:p_descripcion)");
             // declaración if-else en la ejecución de nuestra declaración preparada
             $sentencia->execute(array(
                 ':p_fk_profesor' => intval($idProfesor), ':p_fk_materia' => intval($idMateria), ':p_corte' => intval($corte),
-                ':p_tipo' => $tipo
+                ':p_tipo' => $tipo,':p_descripcion' => $descripcion
             ));
             $num = $sentencia->rowCount();
             if ($num >= 1) {
@@ -167,6 +171,55 @@ class Examen_model
                 $Bool = false;
                 return $Bool;
             }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function list_Examen_profesor($id)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_examen_profesor_list (:p_id)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_id' => $id));
+            while ($filas = $sentencia->fetch(PDO::FETCH_ASSOC)) {
+                $this->examenes[] = $filas;
+            }
+            return $this->examenes;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    function list_pregunta_examen($idExamen)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+           
+            $sentencia = $this->db->prepare("call pa_pregunta_examen_list (:p_examn_id)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_examn_id' => $idExamen));
+            while ($filas = $sentencia->fetch(PDO::FETCH_ASSOC)) {
+                $this->questions[] = $filas;
+            }
+            return $this->questions;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function list_pregunta_respuestas($idpregunta)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+           
+            $sentencia = $this->db->prepare("call pa_pregunta_respuestas_list (:p_idPregunta)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_idPregunta' => $idpregunta));
+            while ($filas = $sentencia->fetch(PDO::FETCH_ASSOC)) {
+                $this->answer[] = $filas;
+            }
+            return $this->answer;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

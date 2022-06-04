@@ -9,5 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- Material Kit CSS -->
     <link href="<?=URL_LIBS?>/css/material-kit.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
