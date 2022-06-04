@@ -107,7 +107,7 @@
                 <div class="col-md-4 ">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Facultad / Carrera <span class="text-danger">(*)</span></label>
-                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectFacultad" id="selectFacultad">
+                    <select class="form-control selectpicker" require data-style="btn btn-link" name="selectFacultad" id="selectFacultad">
                       <option value="">Seleccione...</option>
                       <?php
                       require_once "../Model/Facultad_model.php";
@@ -122,7 +122,7 @@
                 <div class="col-md-4 ">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Materia / Asignatura <span class="text-danger">(*)</span></label>
-                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectMateria" id="selectMateria">
+                    <select class="form-control selectpicker" require data-style="btn btn-link" name="selectMateria" id="selectMateria">
                       <option value="">Seleccione...</option>
 
                       <?php
@@ -149,12 +149,20 @@
                 <div class="col-md-4 ">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Corte <span class="text-danger">(*)</span></label>
-                    <select class="form-control selectpicker" data-style="btn btn-link" name="selectCorte" id="selectCorte">
+                    <select class="form-control selectpicker" require data-style="btn btn-link" name="selectCorte" id="selectCorte">
                       <option value="">Seleccione...</option>
                       <option value="1">Primer corte</option>
                       <option value="2">Segundo corte</option>
                       <option value="3">Tercer corte</option>
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-12 ">
+                  <div class="form-group">
+                    <div class="col-12 row align-items-center">
+                    <label  class ="m-0 mr-2" for="exampleFormControlSelect1">Descripcion del examen <span class="text-danger">(*)</span> </label><a data-container="body" data-toggle="tooltip" data-placement="right" title="Escribe una breve descripción de los temas a tratar en el examen."><span class="material-icons text-info">info</span></a>
+                    </div>
+                    <textarea name="inputDescripcion" id="inputDescripcion" require cols="30" rows="5" class="form-control border rounded"></textarea>
                   </div>
                 </div>
 
@@ -173,7 +181,7 @@
 
 
                   <div class="col-12 text-center" id="emptyQuestions">
-                    <h3>No haz creado ninguna pregunta Aun...</h3>
+                    <h3>No has creado ninguna pregunta Aún...</h3>
                   </div>
 
                 </div>

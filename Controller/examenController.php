@@ -25,7 +25,8 @@ switch ($opcion) {
         $asignature = $_REQUEST["selectMateria"];
         $typeTest = $_REQUEST["typeExam"];
         $Stage = $_REQUEST["selectCorte"];
-        if ($Examen->InsertarExamen(1,$asignature,$Stage,$typeTest)) {
+        $description = $_REQUEST["inputDescripcion"];
+        if ($Examen->InsertarExamen(1,$asignature,$Stage,$typeTest,$description)) {
             
             $idExamen = $Utilities->last_id("examen"); //Nos trae el id Del examen que acabamos de insertar
             $idPregunta = "";
