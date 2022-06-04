@@ -50,53 +50,74 @@
                       <h5 class="mt-3">Preguntas</h5>
                       <p class="text-sm font-weight-normal">Inmensa cantidad de preguntas esperando para ser utilizadas con tus estudiantes</p>
                     </div>
+                    <hr class="vertical dark">
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <!--
-        <div class="col-lg-4 ms-auto me-auto p-lg-4 mt-lg-0 mt-4">
-          <div class="rotating-card-container">
-            <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-              <div class="front front-background " style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=987&amp;q=80); background-size: cover;">
-                <div class="card-body py-7 text-center">
-                  <i class="material-icons text-white text-4xl my-3">touch_app</i>
-                  <h3 class="text-white">Comienza <br> Ahora</h3>
-                  <p class="text-white opacity-8">Crea tu primer Examen y utiliza todas nuestras herramientas </p>
+
+        <section class="my-5 py-5">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-4 ms-auto me-auto p-lg-4 mt-lg-0 mt-4">
+                <div class="rotating-card-container">
+                  <div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
+                    <div class="front front-background" style="background-image: url(../assets/img/examen.png); background-size: cover;">
+                      <div class="card-body py-7 text-center">
+                        <i class="material-icons text-white text-4xl my-3">touch_app</i>
+                        <h3 class="text-white">¿Por qué utilizar <br> BASK-Project ?</h3>
+                        <p class="text-white opacity-8"></p>
+                      </div>
+                    </div>
+                    <div class="back back-background" style="background-image: url(../assets/img/user.png); background-size: cover;">
+                      <div class="card-body pt-7 text-center">
+                        <h3 class="text-white"></h3>
+                        <p class="text-white opacity-8"> Implementamos nuevas tecnologias y hacemos que la creación de examenes sea mas facil.</p>
+                        <a href="../View/usuario.php" target="_blank" class="btn btn-white btn-sm w-50 mx-auto mt-3">Crea tu usuaruio</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="back back-background" style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1365&amp;q=80); background-size: cover;">
-                <div class="card-body pt-7 text-center">
-                  <h3 class="text-white">Descubre mas</h3>
-                  <p class="text-white opacity-8"> Guarda tus examenes y comparte tu creatividad con el equipo de profesionales del poli</p>
-                  <a href=".//sections/page-sections/hero-sections.html" target="_blank" class="btn btn-primary btn-sm w-50 mx-auto mt-3">Crear Examen</a>
+              <div class="col-lg-6 ms-auto">
+                <div class="row justify-content-start">
+                  <div class="col-md-6">
+                    <div class="info">
+                      <i class="material-icons text-gradient text-primary text-3xl">login</i>
+                      <h5 class="font-weight-bolder mt-4">Acceso Rapido</h5>
+                      <p class="pe-5">Contamos con un regitro rapido y seguro para tu ingreso a la plataforma.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info">
+                      <i class="material-icons text-gradient text-primary text-3xl">check</i>
+                      <h5 class="font-weight-bolder mt-4">Preguntas</h5>
+                      <p class="pe-3">Puedes crear diferentes tipos de preguntas con variaciones.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <i class="material-icons text-gradient text-primary text-3xl">delete_forever</i>
+                    <h5 class="font-weight-bolder mt-4">Elimina Facilmente Preguntas</h5>
+                    <p class="pe-5">Despues de realizar una pregunta la puedes eliminar sin necesidad de hacer grandes cambios en el examen.</p>
+                  </div>
+                  <div class="col-md-6">
+                    <i class="material-icons text-gradient text-primary text-3xl">category</i>
+                    <h5 class="font-weight-bolder mt-4">¿Que facultades pueden crear examenes?</h5>
+                    <p class="pe-5">Puedes crear examenes de cualquier facultad, no tenemos limite.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-        <div class="col-md-4 mt-md-0 mt-4">
-          <a href="./sections/page-sections/pricing.html">
-            <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
-              <img class="w-100" src="../assets/img/Devices.jpg" alt="img" loading="lazy">
-            </div>
-            <div class="mt-2 ms-2">
-              <h6 class="mb-0">Pricing</h6>
-              <p class="text-secondary text-sm font-weight-normal">8 Examples</p>
-            </div>
-          </a>
-        </div>
--->
+        </section>
 
         <div class="row">
           <div class="col-md-4 mt-md-0">
             <a href="./sections/page-sections/hero-sections.html">
               <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
-                <img class="w-100" src="../assets/img/Devices.jpg" alt="img" loading="lazy">
+                <img class="w-100" src="../assets/img/Devices2.jpg" alt="img" loading="lazy">
               </div>
               <div class="mt-2 ms-2">
                 <h6 class="mb-0">Crea tus examenes <br>Desde Cualquier Lugar</h6>
@@ -107,7 +128,7 @@
           <div class="col-md-4 mt-md-0 mt-4">
             <a href="./sections/page-sections/features.html">
               <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
-              <img class="w-100" src="../assets/img/facil2.jpg" alt="img" loading="lazy">
+                <img class="w-100" src="../assets/img/facil1.jpg" alt="img" loading="lazy">
               </div>
               <div class="mt-2 ms-2">
                 <h6 class="mb-0">Rapido</h6>
@@ -118,7 +139,7 @@
           <div class="col-md-4 mt-md-0 mt-4">
             <a href="./sections/page-sections/pricing.html">
               <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
-              <img class="w-100" src="../assets/img/plataforma.jpg" alt="img" loading="lazy">
+                <img class="w-100" src="../assets/img/plataforma2.jpg" alt="img" loading="lazy">
               </div>
               <div class="mt-2 ms-2">
                 <h6 class="mb-0">Una plaforma <br>facil de utilizar</h6>
@@ -127,8 +148,6 @@
             </a>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
