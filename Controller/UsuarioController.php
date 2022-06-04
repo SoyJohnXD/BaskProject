@@ -45,11 +45,12 @@ switch ($opcion) {
                 
                 
                 $res = $Usuario->registroProfesor($R_Nombre, $R_Apellido, $R_TipoDoc, $R_NumDoc, $R_Email, $R_Tele, $R_Pass);
+                var_dump($res);die;
                 if ($res == true) {
                     $_SESSION['documento']= $txtDocumento;
                     header('Location: ../View/index.php');
                 }else {
-                    header('Location: ../login.php?result=login');
+                    header('Location: ../login.php');
                 }                    
                 
                 break;
