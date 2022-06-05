@@ -26,7 +26,7 @@
             <h2 class="text-dark mb-5">Mis Examenes creados</h2>
           </div>
           <div class="col-md-12">
-            <table id="example" class="table table-striped" style="width:100%">
+            <table id="example" class="table table-responsive table-striped" style="width:100%">
               <thead>
                 <tr>
                   <th class="text-center">#</th>
@@ -61,60 +61,17 @@
                     $tipo = "Final";
                   }
 
-                  /* $questions = array(); // Array con todas las preguntas
-                  //Objeto por examen 
-                  $listaPregunta = $examenModel->list_pregunta_examen($examen['id']);
-                  foreach ($listaPregunta as $pregunta) {
-                    $typeQuestion="";
-                    $typeAnswer="";
-                    if ($pregunta['tipo_pregunta'] == "abierta") {
-                      $typeQuestion = "abierta";
-                      $typeAnswer = "";
-                    }else{
-                      $typeQuestion = "cerrada";
-                      $typeAnswer = $pregunta['tipo_pregunta'];
-                  }
-
-                  //Answers respuesta de la prgunta 
-                  $answers = array();
-                  $listaRespuestas = $examenModel->list_pregunta_respuestas($pregunta['id']);
-                  if (count($listaRespuestas) > 0 ) {
-                    
-                    foreach ($listaRespuestas as $respuesta) {
-                      $tempAnswer = array(
-                        "contenido" => $respuesta['contenido'],
-                        "correct" => ($respuesta['estado'] == "1")? true: false,
-                      );
-                      array_push($answers,$tempAnswer);
-                    }
-                    
-                  }else{
-                    $answers ="";
-                  }
-
-                  //FORMACION DEL OBJETO DE LA PREGUNTA
-                  $tempQuestion = array([
-                    "indicativo" => $pregunta['indicativo'],
-                    "contexto" => $pregunta['contexto'],
-                    "enunciado" =>$pregunta['enunciado'],
-                    "typeQuestion" =>$typeQuestion,
-                    "typeAnswer" =>$typeAnswer,
-                    "answers" => $answers,
-                    "variations" =>"",
-                    "imageContex" =>array("result"=>$pregunta['imagen']),
-                    
-                  ]);
-                  array_push($questions,$tempQuestion);
-                } */
+                 
                  //FORMACION OBJ DEL EXAMEN CON PREGUNTAS COMPLETO
                 $ExamenObject = array(
                   "idExamen" => $examen['id'],
                   "fk_materia" => $examen['fk_materia'],
+                  "materia" => $examen['materia'],
+                  "facultad" => $examen['facultad'],
                     "fk_profesor" => $examen['fk_profesor'],
-                    "tipoExamen" => $examen['tipo'],
-                    "corte" => $examen['corte'],
+                    "tipoExamen" => $tipo,
+                    "corte" => $corte,
                     "descripcion" => $examen['descripcion'],
-                    "questions" => $questions  ,
                   );
                 ?>
 
@@ -123,10 +80,10 @@
                     <td><?= $examen['materia'] ?> - <?= $examen['facultad'] ?></td>
                     <td><?= $corte ?></td>
                     <td><?= $tipo ?></td>
-                    <td><?= $examen['descripcion'] ?></td>
+                    <td style="max-width: 360px; word-wrap: break-word;"><?= $examen['descripcion'] ?></td>
                     <td><?= $examen['fecha_creacion'] ?></td>
                     <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" class="btn btn-primary">
+                      <button type="button" rel="tooltip" onclick='openExam(<?=json_encode($ExamenObject)?>)' class="btn btn-primary">
                         <i class="material-icons">search</i>
                       </button>
 
@@ -149,16 +106,12 @@
 
   <!-- MODALES -->
   <!-- MODALES Pregunta -->
-  <?php include FOLDER_MODALS . "modalNewQuestion.php"; ?>
-
-  <!-- MODAL EJEMPLO -->
-  <?php include FOLDER_MODALS . "modalExampleQuestion.php"; ?>
-
+  <?php include FOLDER_MODALS . "modalViewExam.php"; ?>
 
 
   <!-- Requerimos los scripts -->
   <?php include FOLDER_TEMPLATE . "scripts.php"; ?>
-  <script src="../logic/create_examen_logic.js"></script>
+  <script src="../logic/viewExamen_logic.js"></script>
   <script>
     var ids_answer = []
     var ids_question = []

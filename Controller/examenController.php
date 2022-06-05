@@ -32,7 +32,7 @@ switch ($opcion) {
             $idPregunta = "";
             foreach ($objQuestions as $keyQuestion => $question) {
                 $typeQuestion = ($question->typeQuestion=="abierta")?$question->typeQuestion:$question->typeAnswer;
-                $imageContex = (!$question->imageContex == "")? str_replace("data:image/png;base64,","",$question->imageContex->result):"";
+                $imageContex = (!$question->imageContex == "")? $question->imageContex->result:"";
                $Examen->InsertarPregunta(
                    $typeQuestion,
                    $question->indicativo,
@@ -90,6 +90,55 @@ switch ($opcion) {
             
         
         break;
+        case 'view':
+             $questions = array(); // Array con todas las preguntas
+                  //Objeto por examen 
+                  $listaPregunta = $Examen->list_pregunta_examen($_REQUEST['exam_id']);
+                  foreach ($listaPregunta as $pregunta) {
+                    $typeQuestion="";
+                    $typeAnswer="";
+                    if ($pregunta['tipo_pregunta'] == "abierta") {
+                      $typeQuestion = "abierta";
+                      $typeAnswer = "";
+                    }else{
+                      $typeQuestion = "cerrada";
+                      $typeAnswer = $pregunta['tipo_pregunta'];
+                  }
+
+                  //Answers respuesta de la prgunta 
+                  $answers = array();
+                  $listaRespuestas = $Examen->list_pregunta_respuestas($pregunta['id']);
+                  if (count($listaRespuestas) > 0 ) {
+                    
+                    foreach ($listaRespuestas as $respuesta) {
+                      $tempAnswer = array(
+                        "contenido" => $respuesta['contenido'],
+                        "correct" => ($respuesta['estado'] == "1")? true: false,
+                      );
+                      array_push($answers,$tempAnswer);
+                    }
+                    
+                  }else{
+                    $answers ="";
+                  }
+
+                  //FORMACION DEL OBJETO DE LA PREGUNTA
+                  $tempQuestion = array(
+                    "indicativo" => $pregunta['indicativo'],
+                    "contexto" => $pregunta['contexto'],
+                    "enunciado" =>$pregunta['enunciado'],
+                    "typeQuestion" =>$typeQuestion,
+                    "typeAnswer" =>$typeAnswer,
+                    "answers" => $answers,
+                    "variations" =>"",
+                    "imageContex" =>array("result"=>$pregunta['imagen']),
+                    
+                  );
+                  array_push($questions,$tempQuestion);
+                  
+                } 
+                echo json_encode($questions);
+            break;
 
     
 }
