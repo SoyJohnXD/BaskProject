@@ -212,7 +212,7 @@ class Examen_model
     {
         try {
             // hacer uso de una declaración preparada para evitar la inyección de sql
-           
+           $this->answer =array();
             $sentencia = $this->db->prepare("call pa_pregunta_respuestas_list (:p_idPregunta)");
             // declaración if-else en la ejecución de nuestra declaración preparada
             $sentencia->execute(array(':p_idPregunta' => $idpregunta));
@@ -220,6 +220,22 @@ class Examen_model
                 $this->answer[] = $filas;
             }
             return $this->answer;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function list_variacion_pregunta($id)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_variacion_pregunta_list (:p_fk_pregunta)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_fk_pregunta' => $id));
+            while ($filas = $sentencia->fetch(PDO::FETCH_ASSOC)) {
+                $this->examenes[] = $filas;
+            }
+            return $this->examenes;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

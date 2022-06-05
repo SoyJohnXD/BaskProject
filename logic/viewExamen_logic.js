@@ -12,8 +12,110 @@ function openExam(object) {
     success: function (data) {
       //creamos el objeto
       questions = JSON.parse(data);
+      console.log(questions);
 
       questions.forEach((question, keyQuestion) => {
+        variationsHtml="";
+        //------------------------------------------------------- VARIACION
+if ((questions[keyQuestion].variations).length > 0) {
+  
+        items_carrousel = "";
+        indicators_carrousel = "";
+  
+        questions[keyQuestion].variations.forEach((element,keyVar) => {
+          answerHtml = "";
+        if (!(questions[keyQuestion].variations[keyVar].typeQuestion == "abierta")) {
+          questions[keyQuestion].variations[keyVar].answers.forEach((key) => {
+            if (questions[keyQuestion].variations[keyVar].typeAnswer == "unica") {
+              answerHtml += `
+                <div class="form-check d-flex align-items-center form-check-radio">
+                <label class="form-check-label pl-5 text-dark">
+                  <input class="form-check-input" type="radio" name="ansInputRadioQuestion_${keyVar}" id="ansInputRadioQuestion_${keyVar}" >
+                      ${key.contenido}
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                  </label>
+                  ${
+                    key.correct
+                      ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                      : ""
+                  }
+                </div>`;
+            } else if (questions[keyQuestion].variations[keyVar].typeAnswer == "multiple") {
+              answerHtml += `
+                <div class="form-check d-flex align-items-center">
+                  <label class="form-check-label pl-5 text-dark">
+                    <input class="form-check-input"  type="checkbox" value="">
+                    ${key.contenido}
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                  ${
+                    key.correct
+                      ? `<span class="material-icons ml-3 text-success">check_circle</span>`
+                      : ""
+                  }
+                </div>`;
+            }
+          });
+        } else {
+          answerHtml = `<div class="form-group">
+            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Escribe tu respuesta aqui..." rows="3" style="border: solid 1px #212529;border-radius: 6px;padding: 15px;"></textarea>
+          </div>`;
+        }
+        debugger
+          items_carrousel += `
+                <div class=" p-3 carousel-item ${(keyVar)==0?'active':''}">
+                  <div class="col-md-10 p-3 ml-5 p-4 pl-5">
+                  <p>${questions[keyQuestion].variations[keyVar].indicativo}</p>
+                  <p>${questions[keyQuestion].variations[keyVar].contexto}</p>
+                  <p>${questions[keyQuestion].variations[keyVar].enunciado} </p>
+                  <img src="${
+                    !questions[keyQuestion].variations[keyVar].imageContex == ""
+                      ? questions[keyQuestion].variations[keyVar].imageContex.result
+                      : ""
+                  }" class="img-responsive ${
+                      questions[keyQuestion].variations[keyVar].imageContex == "" ? "d-none" : ""
+                    }"style="max-width: 55%;" alt="...">
+                          <div class="col-md-12 d-flex mt-2 flex-column">
+                          
+                    ${answerHtml}
+                  </div>
+                  </div>
+                  
+                  
+                </div>
+             
+                `;
+                indicators_carrousel += `<li data-target="#carouselQuestion_${keyQuestion}_indicators" data-slide-to="${keyVar}" class="${(keyVar)==0?'active':''}active"></li>`
+        });
+        variationsHtml = `
+        <div class="col-md-12" id="variations_${keyQuestion}">
+          <hr>
+          <h3>Variaciones generadas</h3>
+          <div id="carouselExampleIndicators" class="carousel slide col-md-12" data-ride="carousel">
+            <ol class="carousel-indicators" style="filter:brightness(0) ;">
+               ${indicators_carrousel}
+            </ol>
+            <div class="carousel-inner p-5">
+               ${items_carrousel}
+            </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" style="filter:brightness(0) ;" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" style="filter:brightness(0) ;" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+              </a>
+        </div>
+      </div>
+            `;
+      }
+
+        //------------------------------------------------------- PREGUNTA PRINCIPAL
         answerHtml = "";
         if (!(questions[keyQuestion].typeQuestion == "abierta")) {
           questions[keyQuestion].answers.forEach((key) => {
@@ -81,11 +183,14 @@ function openExam(object) {
                         
                           ${answerHtml}
                         </div>
+                        <div class="col-md-12">
+                        ${variationsHtml}
+                        </div>
                         </div>
                       </div>
                     </div>`;
       });
-      console.log(QuestionsHTML);
+      
       texto = `
 <h3>Examen de tipo : <b>${object.tipoExamen}</b> </h3>
 <div class="col-md-12">
