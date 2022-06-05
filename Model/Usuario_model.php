@@ -193,5 +193,29 @@ class Usuario_model
             echo $e->getMessage();
         }
     }
+
+    //Contactanos
+
+    function contactanos($R_NombresC, $R_ApellidosC, $R_EmailC, $R_Message)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $sentencia = $this->db->prepare("call pa_Contactarnos (:p_NombresC, :p_ApellidosC, :p_EmailC, :p_Message)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_NombresC' => $R_NombresC, ':p_ApellidosC' => $R_ApellidosC, ':p_EmailC' => $R_EmailC, ':p_Message' => $R_Message));
+            $num = $sentencia->rowCount();
+            if ($num == true) {
+                $Bool = true;
+                return $Bool;
+            } else {
+                $Bool = false;
+                return $Bool;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
 }
     
