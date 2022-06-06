@@ -1,10 +1,23 @@
 DELIMITER $$
+CREATE  PROCEDURE `pa_Contactarnos`(IN `p_NombresC` VARCHAR(155), IN `p_ApellidosC` VARCHAR(155), IN `p_EmailC` VARCHAR(155), IN `p_Message` VARCHAR(500))
+INSERT INTO `contacto`(`nombres`, `apellidos`, `email`, `asunto`) VALUES (p_NombresC, p_ApellidosC , p_EmailC, p_Message)$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE  PROCEDURE `pa_Registrar_Usuario`(IN `p_Nombre` VARCHAR(155), IN `p_Apellido` VARCHAR(155), IN `p_TipoDoc` VARCHAR(155), IN `p_NumDoc` VARCHAR(155), IN `p_Email` VARCHAR(155), IN `p_Tele` VARCHAR(155), IN `p_pass` VARCHAR(155))
 INSERT INTO `persona`( `nombres`, `apellidos`, `tipo_doc`, `num_doc`, `email`, `telefono`, `pass`) VALUES (p_Nombre, p_Apellido, p_TipoDoc, p_NumDoc, p_Email, p_Tele, p_Pass)$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE  PROCEDURE `pa_examen_insert`(IN `p_fk_profesor` INT, IN `p_fk_materia` INT, IN `p_corte` INT, IN `p_tipo` VARCHAR(15), IN `p_descripcion` VARCHAR(200))
+CREATE  PROCEDURE `pa_busqueda_pregunta`(IN `p_filter` VARCHAR(200))
+select pregunta.id,pregunta.tipo_pregunta,pregunta.indicativo,pregunta.contexto,pregunta.enunciado,pregunta.imagen,pregunta.fk_variacion from pregunta inner join 
+pregunta_examen on pregunta_examen.fk_pregunta = pregunta.id inner join
+examen on examen.id = pregunta_examen.fk_examen
+WHERE examen.descripcion like p_filter and pregunta.fk_variacion IS NULL$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `pa_examen_insert`(IN `p_fk_profesor` INT, IN `p_fk_materia` INT, IN `p_corte` INT, IN `p_tipo` VARCHAR(15), IN `p_descripcion` VARCHAR(2000))
 INSERT INTO `examen`( `fk_profesor`, `fk_materia`, `fecha_creacion`, `corte`, `tipo`,descripcion) VALUES (p_fk_profesor,p_fk_materia,NOW(),p_corte,p_tipo,p_descripcion)$$
 DELIMITER ;
 
@@ -63,6 +76,6 @@ email = p_usuario and pass = p_pass$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE  PROCEDURE `pa_variacion_pregunta`(IN `p_fk_pregunta` INT)
-INSERT INTO `variacion_pregunta`( `fk_pregunta`) VALUES (p_fk_pregunta)$$
+CREATE  PROCEDURE `pa_variacion_pregunta_list`(IN `p_fk_pregunta` INT)
+SELECT * from pregunta WHERE pregunta.fk_variacion = p_fk_pregunta$$
 DELIMITER ;

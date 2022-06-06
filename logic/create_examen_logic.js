@@ -862,3 +862,16 @@ function dynamicForm(option, dataSet) {
       break;
   }
 }
+
+function searchQuestion($filter) {
+  $.ajax("../Controller/examenController.php", {
+    type: "POST", // http method
+    data: {
+      filter: filter,
+      opcion: "searchQuestions",
+    }, // data to submit
+    success: function (data) {
+      questions = JSON.parse(data);
+      console.log(questions);
+    }})
+}

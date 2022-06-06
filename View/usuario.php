@@ -5,7 +5,41 @@
 <?php include FOLDER_TEMPLATE . "head.php"; ?>
 
 <body>
-  <?php include FOLDER_TEMPLATE . "top.php"; ?>
+<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg bg-primary" color-on-scroll="100">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="#">
+          B-ASK Project </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="contacto.php" class="nav-link">
+              <i class="material-icons">face</i> Contactanos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../login.php" class="nav-link">
+              <i class="material-icons">login</i> Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="usuario.php" class="nav-link">
+              <i class="material-icons">boy</i> Registrate
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div>
     <div class="page-header header-filter" data-parallax="true" style="background-image: url('<?= URL_LIBS ?>/img/bg3.jpg')">

@@ -185,4 +185,96 @@ switch ($opcion) {
     }
     echo json_encode($questions);
     break;
+    case 'searchQuestions':
+
+      $questions = array(); // Array con todas las preguntas
+      $Question_list = $Examen->search_questios($_REQUEST['filter']);
+      foreach ($Question_list as $pregunta) {
+        $variations = array();
+        $typeQuestion = "";
+        $typeAnswer = "";
+        if ($pregunta['tipo_pregunta'] == "abierta") {
+          $typeQuestion = "abierta";
+          $typeAnswer = "";
+        } else {
+          $typeQuestion = "cerrada";
+          $typeAnswer = $pregunta['tipo_pregunta'];
+        }
+  
+        //Answers respuesta de la prgunta 
+        $answers = array();
+        $listaRespuestas = $Examen->list_pregunta_respuestas($pregunta['id']);
+        if (count($listaRespuestas) > 0) {
+  
+          foreach ($listaRespuestas as $respuesta) {
+            $tempAnswer = array(
+              "contenido" => $respuesta['contenido'],
+              "correct" => ($respuesta['estado'] == "1") ? true : false,
+            );
+            array_push($answers, $tempAnswer);
+          }
+        } else {
+          $answers = "";
+        }
+         // CREAMOS LAS PREGUNTAS VARIACION POR CADA  PREGUNTA SI CUENTA CON ELLAS 
+        $list_variations = $Examen->list_variacion_pregunta($pregunta['id']);
+        if (count($list_variations) > 0) {
+  
+          foreach ($list_variations as $variacion) {
+            $typeVariationQ = "";
+            $typeAnswerVariation = "";
+            if ($variacion['tipo_pregunta'] == "abierta") {
+              $typeVariationQ = "abierta";
+              $typeAnswerVariation = "";
+            } else {
+              $typeVariationQ = "cerrada";
+              $typeAnswerVariation = $variacion['tipo_pregunta'];
+            }
+  
+            //Answers respuestas de la prgunta 
+            $answersVariation = array();
+            $listaRespuestas = $Examen->list_pregunta_respuestas($variacion['id']);
+            if (count($listaRespuestas) > 0) {
+  
+              foreach ($listaRespuestas as $respuesta) {
+                $tempAnswer = array(
+                  "contenido" => $respuesta['contenido'],
+                  "correct" => ($respuesta['estado'] == "1") ? true : false,
+                );
+                array_push($answersVariation, $tempAnswer);
+              }
+            } else {
+              $answersVariation = "";
+            }
+            //FORMACION DEL OBJETO DE LA PREGUNTA
+        $tempVariacion = array(
+          "indicativo" => $variacion['indicativo'],
+          "contexto" => $variacion['contexto'],
+          "enunciado" => $variacion['enunciado'],
+          "typeQuestion" => $typeVariationQ,
+          "typeAnswer" => $typeAnswerVariation,
+          "answers" => $answersVariation,
+          "imageContex" => array("result" => $variacion['imagen']),
+  
+        );
+        array_push($variations, $tempVariacion);
+          }
+        }
+  
+        //FORMACION DEL OBJETO DE LA PREGUNTA
+        $tempQuestion = array(
+          "indicativo" => $pregunta['indicativo'],
+          "contexto" => $pregunta['contexto'],
+          "enunciado" => $pregunta['enunciado'],
+          "typeQuestion" => $typeQuestion,
+          "typeAnswer" => $typeAnswer,
+          "answers" => $answers,
+          "variations" => $variations,
+          "imageContex" => array("result" => $pregunta['imagen']),
+  
+        );
+        array_push($questions, $tempQuestion);
+      }
+      echo json_encode($questions);
+      break;
 }

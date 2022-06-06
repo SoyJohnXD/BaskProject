@@ -1,7 +1,7 @@
 <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg bg-primary" color-on-scroll="100">
   <div class="container">
     <div class="navbar-translate">
-      <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit-pro/index.html">
+      <a class="navbar-brand" href="index.php">
         B-ASK Project </a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,13 +44,13 @@
             <div class="ripple-container"></div>
           </a>
           <div class="dropdown-menu dropdown-with-icons ">
-            <a href="./presentation.html" class="dropdown-item">
+            <a href="../login.php" class="dropdown-item">
               <i class="material-icons">logout</i> Cerrar Secion
             </a>
-            <a href="./index.html" class="dropdown-item">
+            <a href="" class="dropdown-item">
               <i class="material-icons">info</i> Informacion Personal
             </a>
-            <a href="http://demos.creative-tim.com/material-kit-pro/docs/2.1/getting-started/introduction.html" class="dropdown-item">
+            <a href="contacto.php" class="dropdown-item">
               <i class="material-icons">help</i> Ayuda
             </a>
           </div>

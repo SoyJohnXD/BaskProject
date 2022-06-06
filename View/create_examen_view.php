@@ -174,7 +174,7 @@
               <p>Recuerde que el examen tiene un maximo de <b id="maxQuestions"></b> preguntas</p>
               <hr>
               <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#createQuestion"><i class="material-icons">add</i>Crear una pregunta</button>
-              <button class="btn btn-info"><i class="material-icons">search</i>Buscar / Agregar pregunta</button>
+              <button  type="button" class="btn btn-info" data-toggle="modal" data-target="#searchQuestionModal" ><i class="material-icons">search</i>Buscar / Agregar pregunta</button>
               <div class="col-12">
                 <input type="hidden" id="ids_question">
                 <div id="questionContainer" role="tablist" aria-multiselectable="true" class="card-collapse">
@@ -185,7 +185,7 @@
                   </div>
 
                 </div>
-                <input type="text" id="dataQuestions" name="dataQuestions">
+                <input type="hidden" id="dataQuestions" name="dataQuestions">
                 <input type="hidden" id="opcion" name="opcion" value="crearExamen">
                 <button type="button" onclick="dynamicForm('sendForm')" class="btn btn-success float-right">Crear Examen</button>
               </div>
@@ -202,6 +202,9 @@
 
   <!-- MODAL EJEMPLO -->
   <?php include FOLDER_MODALS . "modalExampleQuestion.php"; ?>
+
+   <!-- MODAL BUSQUEDA DE PREGUNTAS -->
+   <?php include FOLDER_MODALS . "modalSearchQuestons.php"; ?>
 
 
 

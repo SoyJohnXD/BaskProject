@@ -241,5 +241,22 @@ class Examen_model
         }
     }
 
+    function search_questios($filtro)
+    {
+        try {
+            // hacer uso de una declaración preparada para evitar la inyección de sql
+            $this->questions=array();
+            $sentencia = $this->db->prepare("call pa_busqueda_pregunta (:p_filter)");
+            // declaración if-else en la ejecución de nuestra declaración preparada
+            $sentencia->execute(array(':p_filter' => "%".$filtro."%"));
+            while ($filas = $sentencia->fetch(PDO::FETCH_ASSOC)) {
+                $this->questions[] = $filas;
+            }
+            return $this->questions;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     
 }
