@@ -66,10 +66,9 @@ switch ($opcion) {
 
         $res = $Usuario->contactanos($R_NombresC, $R_ApellidosC, $R_EmailC, $R_Message);
         var_dump($res);
-        die;
         if ($res == true) {
             $_SESSION['documento'] = $txtDocumento;
-            header('Location: ../View/index.php');
+            header('Location:  ../View/index.php');
         } else {
             header('Location: ../login.php');
         }
